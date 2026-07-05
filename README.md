@@ -16,8 +16,9 @@ shipping across Azure — often ahead of blog posts and release notes.
 2. **A summary view** — a minimal website with a weekly summary and a filterable
    change timeline, with noise (typos, link fixes, metadata sweeps) filtered out
 
-See [PLAN.md](PLAN.md) for the full design and [CONTRACT.md](CONTRACT.md) for the
-pipeline↔website data contract.
+See [PLAN.md](PLAN.md) for the original design,
+[ARCHITECTURE.md](ARCHITECTURE.md) for the implemented architecture, and
+[CONTRACT.md](CONTRACT.md) for the pipeline↔website data contract.
 
 ## What is included
 
