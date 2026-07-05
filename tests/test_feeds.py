@@ -58,12 +58,22 @@ class FeedCategoryTests(unittest.TestCase):
             "sha": "abc123456789",
             "raw_patch_summary": json.dumps({
                 "files": [
-                    {"filename": "articles/aks/widget-autoscaling.md", "status": "added"},
+                    {
+                        "filename": "articles/aks/widget-autoscaling.md",
+                        "status": "added",
+                        "patch": "+Widget autoscaling is now in preview for AKS clusters.",
+                    },
                 ],
             }),
         }
 
-        self.assertEqual(feeds._record_to_json(row)["page_change_category"], "new-page")
+        record = feeds._record_to_json(row)
+        self.assertEqual(record["page_change_category"], "new-page")
+        self.assertEqual(
+            record["change_summary"],
+            "Widget autoscaling is now in preview for AKS clusters.",
+        )
+        self.assertTrue(record["batch_key"].startswith("new-page:aks:widget-autoscaling"))
 
 
 if __name__ == "__main__":

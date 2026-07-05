@@ -47,6 +47,17 @@ META_OR_MARKUP_RE = re.compile(
     r"^\s*(ms\.[a-z.]+|author|title|description|manager)\s*:|^\s*[#\-|>{{\[]|^\s*$",
     re.IGNORECASE,
 )
+MARKDOWN_TOKEN_RE = re.compile(r"[*_`]+|</?[^>]+>|\{#[^}]+\}")
+LINK_RE = re.compile(r"!?\[([^\]]+)\]\([^)]+\)")
+EMOJI_TOKEN_RE = re.compile(r":[a-z0-9_+-]+:")
+APPLIES_TO_RE = re.compile(r"applies\s+to", re.IGNORECASE)
+NOISE_PHRASES = (
+    "learn.microsoft.com",
+    "aka.ms/",
+    "github.com/",
+    "http://",
+    "https://",
+)
 
 
 def _patch_excerpt(raw_patch_summary: str) -> str:
@@ -62,29 +73,137 @@ def _patch_excerpt(raw_patch_summary: str) -> str:
     return "\n\n".join(chunks)[:PATCH_CHAR_CAP]
 
 
-def _first_meaningful_added_line(raw_patch_summary: str) -> str | None:
+def _clean_markdown_text(text: str) -> str:
+    text = LINK_RE.sub(r"\1", text or "")
+    text = EMOJI_TOKEN_RE.sub(" ", text)
+    text = MARKDOWN_TOKEN_RE.sub("", text)
+    text = text.replace("&nbsp;", " ")
+    text = re.sub(r"\s*\|\s*", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip(" \t-:;\"'")
+
+
+def _sentence(text: str) -> str:
+    text = text.strip()
+    text = re.sub(r"\s+([,.!?])", r"\1", text)
+    text = text.replace(",.", ".")
+    text = text.rstrip(" ,;:")
+    if text and text[-1] not in ".!?":
+        text += "."
+    return text
+
+
+def _applies_to_summary(text: str) -> str | None:
+    if not APPLIES_TO_RE.search(text):
+        return None
+    products = []
+    for label in ("AKS Automatic", "AKS Standard"):
+        if label.lower() in text.lower():
+            products.append(label)
+    if not products:
+        return "Applies-to matrix was updated."
+    if len(products) == 1:
+        product_list = products[0]
+    else:
+        product_list = " and ".join([", ".join(products[:-1]), products[-1]]).strip()
+    return f"Applies-to matrix now includes {product_list}."
+
+
+def _summary_from_added_text(text: str) -> str | None:
+    applies_to = _applies_to_summary(text)
+    if applies_to:
+        return applies_to
+
+    stripped = text.lstrip()
+    if stripped.startswith(":::"):
+        return None
+    if stripped.startswith("|"):
+        return "Updated documentation table."
+    text = _clean_markdown_text(text)
+    if len(text) < 20:
+        return None
+    low = text.lower()
+    if any(phrase in low for phrase in NOISE_PHRASES):
+        return None
+    if META_OR_MARKUP_RE.match(text):
+        return None
+    if re.fullmatch(r"[-=|:\s]+", text):
+        return None
+    return _sentence(text[:220].rstrip())
+
+
+def added_change_summaries(raw_patch_summary: str, limit: int = 3) -> list[str]:
     try:
         data = json.loads(raw_patch_summary or "{}")
     except json.JSONDecodeError:
-        return None
+        return []
+    summaries = []
+    seen = set()
     for f in data.get("files") or []:
         for line in (f.get("patch") or "").splitlines():
             if not line.startswith("+") or line.startswith("+++"):
                 continue
-            text = line[1:].strip()
-            if len(text) < 20 or META_OR_MARKUP_RE.match(text):
+            summary = _summary_from_added_text(line[1:].strip())
+            if not summary:
                 continue
-            return text[:200]
-    return None
+            key = summary.lower()
+            if key in seen:
+                continue
+            summaries.append(summary)
+            seen.add(key)
+            if len(summaries) >= limit:
+                return summaries
+    return summaries
+
+
+def _patch_files(raw_patch_summary: str) -> list[dict]:
+    try:
+        data = json.loads(raw_patch_summary or "{}")
+    except json.JSONDecodeError:
+        return []
+    return data.get("files") or []
+
+
+def _markdown_pages(files: list[dict]) -> list[dict]:
+    pages = []
+    for f in files:
+        name = (f.get("filename") or "").lower()
+        if name.endswith(".md") and "/includes/" not in name and "/media/" not in name:
+            pages.append(f)
+    return pages
+
+
+def doc_change_summary(row) -> str:
+    """Return a reader-facing summary of what changed in the documentation.
+
+    This intentionally describes the doc delta rather than repeating the commit
+    title. It is deterministic so feeds can be regenerated without an LLM key.
+    """
+    raw_patch_summary = row["raw_patch_summary"] or ""
+    files = _patch_files(raw_patch_summary)
+    pages = _markdown_pages(files)
+    added = added_change_summaries(raw_patch_summary, limit=2)
+    removed_pages = [f for f in pages if f.get("status") == "removed"]
+    new_pages = [f for f in pages if f.get("status") == "added"]
+
+    if added:
+        if added[0].startswith("Applies-to matrix"):
+            return added[0]
+        return " ".join(added)
+    if removed_pages:
+        return "Removed retired documentation page." if len(removed_pages) == 1 \
+            else f"Removed {len(removed_pages)} retired documentation pages."
+    if new_pages:
+        return "Added a new documentation page." if len(new_pages) == 1 \
+            else f"Added {len(new_pages)} new documentation pages."
+    if pages:
+        return "Updated documentation page." if len(pages) == 1 \
+            else f"Updated {len(pages)} documentation pages."
+    return _sentence((row["title"] or "Documentation update").rstrip("."))
 
 
 def heuristic_summary(row) -> str:
-    title = (row["title"] or "Documentation update").rstrip(".")
-    summary = f"{title}."
-    snippet = _first_meaningful_added_line(row["raw_patch_summary"])
-    if snippet:
-        summary += f' Notable addition: "{snippet}"'
-    return summary
+    return doc_change_summary(row)
 
 
 def _parse_llm_json(text: str) -> dict | None:

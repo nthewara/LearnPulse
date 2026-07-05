@@ -1,6 +1,6 @@
 {
   "product": "application-network",
-  "generated_at": "2026-07-05T00:36:46Z",
+  "generated_at": "2026-07-05T03:07:06Z",
   "records": [
     {
       "id": "49839ede-0",
@@ -8,7 +8,10 @@
       "date": "2026-06-17",
       "kind": "doc-update",
       "title": "Correct 1.3 (Istio 1.28) compatible AKS range to 1.30-1.34",
-      "summary": "Correct 1.3 (Istio 1.28) compatible AKS range to 1.30-1.34.",
+      "summary": "Updated documentation table.",
+      "change_summary": "Updated documentation table.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:application-network:updated-documentation-table",
       "reasons": [
         "table-edit"
       ],
@@ -27,7 +30,10 @@
       "date": "2026-06-17",
       "kind": "doc-update",
       "title": "Sync AppNet supported versions with applink.yaml manifest",
-      "summary": "Sync AppNet supported versions with applink.yaml manifest.",
+      "summary": "Updated documentation table.",
+      "change_summary": "Updated documentation table.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:application-network:updated-documentation-table",
       "reasons": [
         "table-edit"
       ],

@@ -184,6 +184,7 @@ button.chip[aria-pressed="true"] {
   display: flex;
   align-items: baseline;
   gap: 0.6rem;
+  flex-wrap: wrap;
 }
 .record .head a {
   color: var(--text);
@@ -194,6 +195,20 @@ button.chip[aria-pressed="true"] {
   margin: 0.35rem 0 0;
   font-size: 0.9rem;
   color: var(--muted);
+}
+.batch-record .head a {
+  flex: 1 1 18rem;
+}
+.count-pill {
+  color: var(--faint);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+  font-size: 0.72rem;
+}
+.page-list a {
+  color: var(--link);
 }
 .record .meta {
   margin-top: 0.5rem;

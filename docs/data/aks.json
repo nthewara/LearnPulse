@@ -1,6 +1,6 @@
 {
   "product": "aks",
-  "generated_at": "2026-07-05T00:36:46Z",
+  "generated_at": "2026-07-05T03:07:06Z",
   "records": [
     {
       "id": "15ab5bf0-0",
@@ -8,7 +8,10 @@
       "date": "2026-06-30",
       "kind": "doc-update",
       "title": "Adding AKS Automatic",
-      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
       "reasons": [
         "doc-update"
       ],
@@ -29,7 +32,10 @@
       "date": "2026-06-30",
       "kind": "doc-update",
       "title": "Adding AKS Automatic",
-      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
       "reasons": [
         "doc-update"
       ],
@@ -48,7 +54,10 @@
       "date": "2026-06-30",
       "kind": "doc-update",
       "title": "Adding AKS Automatic",
-      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to:** :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
       "reasons": [
         "doc-update"
       ],
@@ -67,7 +76,10 @@
       "date": "2026-06-30",
       "kind": "doc-update",
       "title": "Apply suggestions from code review",
-      "summary": "Apply suggestions from code review. Notable addition: \"If you're unfamiliar with VPA, use the following deployment pattern during application development to identify each application's unique resource utilization characteristics, test VPA to verify it's f\"",
+      "summary": "If you're unfamiliar with VPA, use the following deployment pattern during application development to identify each application's unique resource utilization characteristics, test VPA to verify it's functioning properly. 1. Establish observability first by collecting actual resource utilization telemetry over a given period of time. This telemetry helps you understand the behavior and any signs of issues from container and pod resources.",
+      "change_summary": "If you're unfamiliar with VPA, use the following deployment pattern during application development to identify each application's unique resource utilization characteristics, test VPA to verify it's functioning properly. 1. Establish observability first by collecting actual resource utilization telemetry over a given period of time. This telemetry helps you understand the behavior and any signs of issues from container and pod resources.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:if-you-re-unfamiliar-with-vpa-use-the-following-deployment-pattern-during-applic",
       "reasons": [
         "doc-update"
       ],
@@ -86,7 +98,10 @@
       "date": "2026-06-30",
       "kind": "doc-update",
       "title": "Merge pull request #3434 from schaffererin/vpa-automatic",
-      "summary": "Merge pull request #3434 from schaffererin/vpa-automatic. Notable addition: \"**Applies to:** :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
       "reasons": [
         "doc-update"
       ],
@@ -105,7 +120,10 @@
       "date": "2026-06-30",
       "kind": "doc-update",
       "title": "Adding AKS Automatic",
-      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
       "reasons": [
         "doc-update"
       ],
@@ -124,7 +142,10 @@
       "date": "2026-06-30",
       "kind": "breaking-change",
       "title": "Adding AKS Automatic",
-      "summary": "Adding AKS Automatic. Notable addition: \"Kubernetes Event-driven Autoscaling (KEDA) is a single-purpose and lightweight component that makes application autoscaling simple. It's a Cloud Native Computing Foundation (CNCF) Graduate project. KE\"",
+      "summary": "Kubernetes Event-driven Autoscaling (KEDA) is a single-purpose and lightweight component that makes application autoscaling simple. It's a Cloud Native Computing Foundation (CNCF) Graduate project. KEDA uses event-driven. For most production workloads, AKS Automatic is the recommended default AKS experience. AKS Automatic is production ready by default and includes KEDA preconfigured on the cluster. If you use AKS Standard, you can enable.",
+      "change_summary": "Kubernetes Event-driven Autoscaling (KEDA) is a single-purpose and lightweight component that makes application autoscaling simple. It's a Cloud Native Computing Foundation (CNCF) Graduate project. KEDA uses event-driven. For most production workloads, AKS Automatic is the recommended default AKS experience. AKS Automatic is production ready by default and includes KEDA preconfigured on the cluster. If you use AKS Standard, you can enable.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:kubernetes-event-driven-autoscaling-keda-is-a-single-purpose-and-lightweight-com",
       "reasons": [
         "keyword:preview",
         "keyword:breaking-change"

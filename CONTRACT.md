@@ -53,8 +53,10 @@ Newest-first, capped at 200 records. Older history stays in SQLite only.
   "date": "2026-07-02",
   "kind": "preview",
   "title": "Add note on Azure Spot node pools for stateful workloads",
-  "summary": "One to two sentences describing what product capability changed.",
+  "summary": "One to two sentences describing what changed in the docs.",
+  "change_summary": "Azure Spot node pool guidance now covers stateful workload considerations.",
   "page_change_category": "new-page",
+  "batch_key": "new-page:aks:azure-spot-node-pool-guidance-now-covers-stateful-workload-considerations",
   "reasons": ["keyword:preview", "new-file"],
   "files": ["articles/aks/spot-node-pools.md"],
   "doc_urls": ["https://learn.microsoft.com/azure/aks/spot-node-pools"],
@@ -68,10 +70,14 @@ Field rules:
 - `date`: ISO date (YYYY-MM-DD) of the commit (author date, UTC).
 - `kind`: exactly one of `new-feature | ga | preview | deprecation | breaking-change | doc-update`.
 - `title`: <= 100 chars, human-readable (cleaned commit title or LLM-generated).
-- `summary`: 1–2 sentences. May equal title-derived text when LLM is unavailable.
+- `summary`: 1–2 sentences focused on what changed in the documentation, not raw
+  diff text or commit boilerplate.
+- `change_summary`: deterministic display summary used for dashboard batching.
 - `page_change_category`: `new-page` when the record adds at least one markdown
   page; otherwise `existing-page` for modified or renamed markdown pages. Older
   feeds may omit it; the website derives the category from `files` and `reasons`.
+- `batch_key`: stable grouping hint for collapsing related records into one
+  dashboard card. Older feeds may omit it; the website derives a fallback key.
 - `reasons`: rule-triage reason codes (free-form kebab strings, shown as small tags).
 - `doc_urls`: derived from files via product `learn_base` (strip `.md`); may be empty.
 - All string fields are plain text — the website must escape them when rendering
