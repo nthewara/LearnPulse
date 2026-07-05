@@ -319,6 +319,118 @@
 
   // ---------- rendering ----------
 
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  function svgEl(tag, attrs) {
+    var node = document.createElementNS(SVG_NS, tag);
+    if (attrs) {
+      Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+    }
+    return node;
+  }
+
+  function dayKey(d) { // Date -> "YYYY-MM-DD" in UTC
+    return d.toISOString().slice(0, 10);
+  }
+
+  // Per-day change counts over the last `days` days, anchored to the newest
+  // record (falls back to today when there are no records).
+  function pulseBuckets(days) {
+    var counts = {};
+    var latest = null;
+    state.records.forEach(function (r) {
+      if (!r.date) return;
+      counts[r.date] = (counts[r.date] || 0) + 1;
+      if (!latest || r.date > latest) latest = r.date;
+    });
+    var end = latest ? new Date(latest + "T00:00:00Z") : new Date();
+    var series = [];
+    for (var i = days - 1; i >= 0; i -= 1) {
+      var d = new Date(end.getTime() - i * 86400000);
+      var key = dayKey(d);
+      series.push({ date: key, count: counts[key] || 0 });
+    }
+    return series;
+  }
+
+  // Signature element: an EKG-style pulse trace of daily change volume.
+  // Built entirely with DOM APIs — no innerHTML, no record-derived markup.
+  function renderPulse() {
+    var host = document.getElementById("pulse");
+    if (!host) return;
+
+    var days = 14;
+    var series = pulseBuckets(days);
+    var W = 260, H = 48, padY = 7, padX = 3;
+    var baseline = H - padY;
+    var top = padY;
+    var max = series.reduce(function (m, p) { return Math.max(m, p.count); }, 0);
+    var span = W - padX * 2;
+    var stepX = days > 1 ? span / (days - 1) : 0;
+
+    function xAt(i) { return padX + i * stepX; }
+    function yAt(count) {
+      if (max <= 0) return baseline;
+      return baseline - (count / max) * (baseline - top);
+    }
+
+    // Build an EKG-like trace: a flat lead into each sample, then a sharp
+    // deflection to the sample value. Isolated spikes read like a heartbeat.
+    var pts = [];
+    series.forEach(function (p, i) {
+      var x = xAt(i);
+      var y = yAt(p.count);
+      if (p.count > 0 && stepX > 0) {
+        pts.push([x - stepX * 0.28, baseline]);
+        pts.push([x, y]);
+        pts.push([x + stepX * 0.28, baseline]);
+      } else {
+        pts.push([x, baseline]);
+      }
+    });
+
+    var svg = svgEl("svg", {
+      viewBox: "0 0 " + W + " " + H,
+      preserveAspectRatio: "none",
+      class: "pulse-svg",
+      focusable: "false"
+    });
+    svg.setAttribute("aria-hidden", "true");
+
+    // Faint zero baseline — the instrument's resting line.
+    svg.appendChild(svgEl("line", {
+      x1: padX, y1: baseline, x2: W - padX, y2: baseline, class: "pulse-base"
+    }));
+
+    var d = pts.map(function (p, i) {
+      return (i === 0 ? "M" : "L") + p[0].toFixed(2) + " " + p[1].toFixed(2);
+    }).join(" ");
+    var trace = svgEl("path", { d: d, class: "pulse-trace" });
+    svg.appendChild(trace);
+
+    // Leading cursor dot at the most recent sample — a live-monitor touch.
+    var last = series[series.length - 1];
+    svg.appendChild(svgEl("circle", {
+      cx: xAt(days - 1), cy: yAt(last.count), r: 2.6, class: "pulse-cursor"
+    }));
+
+    var caption = host.querySelector(".pulse-caption");
+    host.insertBefore(svg, caption || null);
+
+    var reduce = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce && typeof trace.getTotalLength === "function") {
+      var len = trace.getTotalLength();
+      if (len && isFinite(len)) {
+        trace.style.strokeDasharray = len;
+        trace.style.strokeDashoffset = len;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { host.classList.add("pulse-live"); });
+        });
+      }
+    }
+  }
+
   function renderSummary(summary) {
     var tiles = document.getElementById("stat-tiles");
     var counts = summary.counts_by_kind || {};
@@ -410,7 +522,7 @@
   }
 
   function renderBatch(batch) {
-    var card = el("article", "record batch-record");
+    var card = el("article", "record batch-record record-" + batch.kind);
 
     var head = el("div", "head");
     head.appendChild(badgeFor(batch.kind));
@@ -533,6 +645,7 @@
         var products = (productsDoc && productsDoc.products) || [];
         if (!products.length) {
           statusEl.textContent = "Couldn't load data.";
+          renderPulse();
           return;
         }
         products.forEach(function (p) { state.productNames[p.id] = p.name; });
@@ -547,6 +660,7 @@
           });
           if (feeds.every(function (f) { return f.status === "rejected"; })) {
             statusEl.textContent = "Couldn't load data.";
+            renderPulse();
             return;
           }
           // Newest first; stable sort keeps each feed's internal order on ties.
@@ -560,6 +674,7 @@
           if (summary) renderSummary(summary);
           renderFilters(products);
           renderTimeline();
+          renderPulse();
         });
       })
       .catch(function () {
