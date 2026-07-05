@@ -29,13 +29,14 @@ See [PLAN.md](PLAN.md) for the original design,
   dedupe state, raw commit data, triage fields, and summaries.
 - **GitHub Pages dashboard** in `docs/`: vanilla `index.html`, `style.css`, and
   `app.js` reading committed JSON from `docs/data/`.
-- **Scheduled refresh workflow** in `.github/workflows/pipeline.yml`, running every
-  6 hours and committing refreshed `data/`, `docs/data/`, and `digests/` files.
+- **Refresh workflow** in `.github/workflows/pipeline.yml`, currently run manually
+  via `workflow_dispatch` (a 6-hour schedule is stubbed out, ready to re-enable),
+  committing refreshed `data/`, `docs/data/`, and `digests/` files.
 
 ## How it works
 
 ```
-products.yml ──▶ pipeline/ (Python, GitHub Actions every 6h)
+products.yml ──▶ pipeline/ (Python, GitHub Actions on manual dispatch)
                    ingest → triage → summarize → feeds → digest
                      │
                      ├─▶ data/learnpulse.db      (SQLite system of record)
@@ -90,8 +91,9 @@ Pipeline arguments:
   provided automatically by Actions.
 - `ANTHROPIC_API_KEY`: optional; enables Claude summaries. If unset or failing, the
   pipeline falls back to deterministic heuristic summaries.
-- The scheduled workflow also accepts a manual `workflow_dispatch` `since_days`
-  input for backfills.
+- The workflow is triggered manually (`gh workflow run pipeline`, optionally with a
+  `since_days` input for backfills); the cron schedule is commented out until the
+  pipeline has proven itself on supervised runs.
 
 ## Testing
 

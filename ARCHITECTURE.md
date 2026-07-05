@@ -13,7 +13,7 @@ JSON feeds.
 products.yml
     |
     v
-GitHub Actions schedule / manual dispatch
+GitHub Actions manual dispatch (schedule stubbed out)
     |
     v
 pipeline/run.py
@@ -43,7 +43,7 @@ repository, and GitHub Pages serves the static dashboard from `docs/`.
 | `docs/` | GitHub Pages site root: static HTML, CSS, JS, and JSON feeds. |
 | `docs/data/` | Generated dashboard feeds: `products.json`, per-product feeds, and `summary.json`. |
 | `digests/` | Generated weekly Markdown digests. |
-| `.github/workflows/pipeline.yml` | Scheduled and manual pipeline runner. |
+| `.github/workflows/pipeline.yml` | Manually dispatched pipeline runner (cron stubbed out). |
 | `tests/` | Stdlib unit tests for ingestion, triage, summarization, and feeds. |
 
 The data contract between pipeline and website is documented in
@@ -107,8 +107,10 @@ DOM `textContent`; the dashboard does not use external scripts or CDNs.
 
 ## Operations and deployment
 
-`.github/workflows/pipeline.yml` runs every six hours and can also be triggered
-manually with an optional `since_days` backfill window.
+`.github/workflows/pipeline.yml` is triggered manually (`workflow_dispatch`) with
+an optional `since_days` backfill window. A six-hour cron schedule is present but
+commented out; re-enable it once the pipeline has proven itself on supervised runs
+(see issue #16).
 
 The workflow:
 

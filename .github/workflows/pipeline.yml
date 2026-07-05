@@ -1,8 +1,9 @@
 name: pipeline
 
 on:
-  schedule:
-    - cron: "23 */6 * * *"
+  # Manual-only for now (#16). To enable scheduled refreshes, uncomment:
+  # schedule:
+  #   - cron: "23 */6 * * *"
   workflow_dispatch:
     inputs:
       since_days:
@@ -20,6 +21,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -48,4 +50,5 @@ jobs:
           git config user.email "actions@github.com"
           git add data docs/data digests
           git diff --quiet --cached || git commit -m "pipeline: refresh data feeds"
+          git pull --rebase --autostash origin main
           git push
