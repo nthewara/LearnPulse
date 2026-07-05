@@ -54,6 +54,7 @@ Newest-first, capped at 200 records. Older history stays in SQLite only.
   "kind": "preview",
   "title": "Add note on Azure Spot node pools for stateful workloads",
   "summary": "One to two sentences describing what product capability changed.",
+  "page_change_category": "new-page",
   "reasons": ["keyword:preview", "new-file"],
   "files": ["articles/aks/spot-node-pools.md"],
   "doc_urls": ["https://learn.microsoft.com/azure/aks/spot-node-pools"],
@@ -68,6 +69,9 @@ Field rules:
 - `kind`: exactly one of `new-feature | ga | preview | deprecation | breaking-change | doc-update`.
 - `title`: <= 100 chars, human-readable (cleaned commit title or LLM-generated).
 - `summary`: 1–2 sentences. May equal title-derived text when LLM is unavailable.
+- `page_change_category`: `new-page` when the record adds at least one markdown
+  page; otherwise `existing-page` for modified or renamed markdown pages. Older
+  feeds may omit it; the website derives the category from `files` and `reasons`.
 - `reasons`: rule-triage reason codes (free-form kebab strings, shown as small tags).
 - `doc_urls`: derived from files via product `learn_base` (strip `.md`); may be empty.
 - All string fields are plain text — the website must escape them when rendering

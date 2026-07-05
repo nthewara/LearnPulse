@@ -157,6 +157,14 @@ button.chip[aria-pressed="true"] {
 /* Timeline */
 .status { color: var(--muted); }
 
+.category-section + .category-section { margin-top: 2rem; }
+.category-heading {
+  font-size: 1rem;
+  margin: 1.25rem 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
 .date-heading {
   font-size: 0.82rem;
   font-weight: 600;
