@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-05T06:34:39Z",
+  "generated_at": "2026-07-05T12:51:16Z",
   "window_days": 7,
   "counts_by_kind": {
-    "new-feature": 0,
+    "new-feature": 1,
     "ga": 0,
     "preview": 1,
     "deprecation": 0,
@@ -10,7 +10,7 @@
     "doc-update": 22
   },
   "counts_by_product": {
-    "aks": 20,
+    "aks": 21,
     "kubernetes-fleet": 3,
     "application-network": 0,
     "azure-openai": 0,
@@ -42,6 +42,43 @@
       ],
       "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/a4530a68d649571937487760b9846d315839f4aa",
       "sha": "a4530a68"
+    },
+    {
+      "id": "98c3ce50-0",
+      "product": "aks",
+      "date": "2026-07-04",
+      "kind": "new-feature",
+      "title": "Add Inspektor Gadget extension",
+      "summary": "name: Inspektor Gadget extension. href: inspektor-gadget-overview.md.",
+      "change_summary": "name: Inspektor Gadget extension. href: inspektor-gadget-overview.md.",
+      "page_change_category": "new-page",
+      "batch_key": "new-page:aks:name-inspektor-gadget-extension-href-inspektor-gadget-overview-md",
+      "reasons": [
+        "new-file",
+        "keyword:preview",
+        "toc-entry-added",
+        "table-edit"
+      ],
+      "files": [
+        "articles/aks/TOC.yml",
+        "articles/aks/inspektor-gadget-catalog.md",
+        "articles/aks/inspektor-gadget-configure.md",
+        "articles/aks/inspektor-gadget-overview.md",
+        "articles/aks/inspektor-gadget-run-gadgets.md",
+        "articles/aks/inspektor-gadget-troubleshoot.md",
+        "articles/aks/media/inspektor-gadget/dns-trace-kubernetes-context.png"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-catalog",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-configure",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-overview",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-run-gadgets",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-troubleshoot"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/98c3ce504db03ab392dd25d570dbe4f59c5530f2",
+      "sha": "98c3ce50",
+      "author": "mqasimsarfraz",
+      "author_name": "Qasim Sarfraz"
     },
     {
       "id": "ccbea5b2-0",
@@ -174,29 +211,7 @@
       ],
       "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/1e45a7d20a68fde0af6691ec6a47107bdfd02031",
       "sha": "1e45a7d2"
-    },
-    {
-      "id": "47e8cc24-0",
-      "product": "aks",
-      "date": "2026-07-01",
-      "kind": "doc-update",
-      "title": "Merge pull request #3442 from matthchr/matthchr/small-docs-fixup",
-      "summary": "Updated documentation page.",
-      "change_summary": "Updated documentation page.",
-      "page_change_category": "existing-page",
-      "batch_key": "existing-page:aks:updated-documentation-page",
-      "reasons": [
-        "doc-update"
-      ],
-      "files": [
-        "articles/aks/node-auto-provisioning-upgrade-image.md"
-      ],
-      "doc_urls": [
-        "https://learn.microsoft.com/azure/aks/node-auto-provisioning-upgrade-image"
-      ],
-      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/47e8cc244e5c88c943ac65fd9d8a42c9a8af8788",
-      "sha": "47e8cc24"
     }
   ],
-  "total_records": 24
+  "total_records": 25
 }

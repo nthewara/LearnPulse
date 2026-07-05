@@ -1,7 +1,44 @@
 {
   "product": "aks",
-  "generated_at": "2026-07-05T06:34:39Z",
+  "generated_at": "2026-07-05T12:51:16Z",
   "records": [
+    {
+      "id": "98c3ce50-0",
+      "product": "aks",
+      "date": "2026-07-04",
+      "kind": "new-feature",
+      "title": "Add Inspektor Gadget extension",
+      "summary": "name: Inspektor Gadget extension. href: inspektor-gadget-overview.md.",
+      "change_summary": "name: Inspektor Gadget extension. href: inspektor-gadget-overview.md.",
+      "page_change_category": "new-page",
+      "batch_key": "new-page:aks:name-inspektor-gadget-extension-href-inspektor-gadget-overview-md",
+      "reasons": [
+        "new-file",
+        "keyword:preview",
+        "toc-entry-added",
+        "table-edit"
+      ],
+      "files": [
+        "articles/aks/TOC.yml",
+        "articles/aks/inspektor-gadget-catalog.md",
+        "articles/aks/inspektor-gadget-configure.md",
+        "articles/aks/inspektor-gadget-overview.md",
+        "articles/aks/inspektor-gadget-run-gadgets.md",
+        "articles/aks/inspektor-gadget-troubleshoot.md",
+        "articles/aks/media/inspektor-gadget/dns-trace-kubernetes-context.png"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-catalog",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-configure",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-overview",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-run-gadgets",
+        "https://learn.microsoft.com/azure/aks/inspektor-gadget-troubleshoot"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/98c3ce504db03ab392dd25d570dbe4f59c5530f2",
+      "sha": "98c3ce50",
+      "author": "mqasimsarfraz",
+      "author_name": "Qasim Sarfraz"
+    },
     {
       "id": "817854da-0",
       "product": "aks",
