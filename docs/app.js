@@ -292,6 +292,13 @@
     return batches;
   }
 
+  function batchTitle(batch) {
+    return SHORT_NAMES[batch.product] ||
+      state.productNames[batch.product] ||
+      batch.product ||
+      "Documentation change";
+  }
+
   function countLabel(batch) {
     var changes = batch.records.length;
     var pages = batch.pages.length;
@@ -372,8 +379,8 @@
     var kindsPresent = KINDS.filter(function (k) {
       return state.records.some(function (r) { return r.kind === k.id; });
     });
+    var kindRow = document.getElementById("kind-filters");
     if (kindsPresent.length > 1) {
-      var kindRow = document.getElementById("kind-filters");
       kindsPresent.forEach(function (k) {
         kindRow.appendChild(chip(k.badge, false, function (ev) {
           if (state.kinds.has(k.id)) state.kinds.delete(k.id);
@@ -382,6 +389,8 @@
           applyFilters();
         }));
       });
+    } else if (kindRow.parentNode) {
+      kindRow.parentNode.hidden = true;
     }
     document.getElementById("filters").hidden = false;
   }
@@ -405,13 +414,17 @@
 
     var head = el("div", "head");
     head.appendChild(badgeFor(batch.kind));
-    head.appendChild(link(firstUrl(batch.records), batch.summary || "Documentation change"));
+    head.appendChild(link(firstUrl(batch.records), batchTitle(batch), "card-title"));
     head.appendChild(el("span", "count-pill", countLabel(batch)));
     card.appendChild(head);
 
+    if (batch.summary) {
+      card.appendChild(el("p", "card-summary", batch.summary));
+    }
+
     if (batch.pages.length) {
-      var pages = el("p", "summary-text page-list");
-      pages.appendChild(document.createTextNode(
+      var pages = el("p", "card-pages");
+      pages.appendChild(el("span", "card-pages-label",
         pageChangeCategory(batch.records[0]) === "new-page" ? "New page: " : "Affected pages: "
       ));
       appendPageLinks(pages, batch.pages);
@@ -419,8 +432,6 @@
     }
 
     var meta = el("div", "meta");
-    meta.appendChild(el("span", null, state.productNames[batch.product] || batch.product));
-    meta.appendChild(el("span", "sep", "·"));
     meta.appendChild(el("span", null, formatDate(batch.date)));
     meta.appendChild(el("span", "sep", "·"));
     meta.appendChild(el("span", null, batch.records.length === 1 ? "1 commit" : batch.records.length + " commits"));
