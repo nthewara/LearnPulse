@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-07-05T00:36:46Z",
+  "window_days": 7,
+  "counts_by_kind": {
+    "new-feature": 0,
+    "ga": 0,
+    "preview": 0,
+    "deprecation": 0,
+    "breaking-change": 1,
+    "doc-update": 6
+  },
+  "counts_by_product": {
+    "aks": 7,
+    "kubernetes-fleet": 0,
+    "application-network": 0
+  },
+  "top_changes": [
+    {
+      "id": "a4530a68-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "breaking-change",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"Kubernetes Event-driven Autoscaling (KEDA) is a single-purpose and lightweight component that makes application autoscaling simple. It's a Cloud Native Computing Foundation (CNCF) Graduate project. KE\"",
+      "reasons": [
+        "keyword:preview",
+        "keyword:breaking-change"
+      ],
+      "files": [
+        "articles/aks/keda-about.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/keda-about"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/a4530a68d649571937487760b9846d315839f4aa",
+      "sha": "a4530a68"
+    },
+    {
+      "id": "15ab5bf0-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/csi-secrets-store-identity-access.md",
+        "articles/aks/use-oidc-issuer.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access",
+        "https://learn.microsoft.com/azure/aks/use-oidc-issuer"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/15ab5bf0682f4c0157e858c822d04ef95b6802e5",
+      "sha": "15ab5bf0"
+    },
+    {
+      "id": "2417d1ba-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/image-cleaner.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/image-cleaner"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/2417d1bac80699f0b8686b01b671fe5c35e1ea80",
+      "sha": "2417d1ba"
+    },
+    {
+      "id": "18bd6b44-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to:** :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/vertical-pod-autoscaler.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/vertical-pod-autoscaler"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/18bd6b44b610e49772ded64e18a69a3e9daed6a8",
+      "sha": "18bd6b44"
+    },
+    {
+      "id": "36027e17-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Apply suggestions from code review",
+      "summary": "Apply suggestions from code review. Notable addition: \"If you're unfamiliar with VPA, use the following deployment pattern during application development to identify each application's unique resource utilization characteristics, test VPA to verify it's f\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/vertical-pod-autoscaler.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/vertical-pod-autoscaler"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/36027e172ce5aab8ad84b1451e0e1aec8f35fefd",
+      "sha": "36027e17"
+    },
+    {
+      "id": "5130790b-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Merge pull request #3434 from schaffererin/vpa-automatic",
+      "summary": "Merge pull request #3434 from schaffererin/vpa-automatic. Notable addition: \"**Applies to:** :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/vertical-pod-autoscaler.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/vertical-pod-autoscaler"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/5130790b61945ccdf6304faa89e48f0048634514",
+      "sha": "5130790b"
+    },
+    {
+      "id": "9937ffa2-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/api-server-vnet-integration.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/api-server-vnet-integration"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/9937ffa2d5d17c7a47c08152c91f754af7fbbc36",
+      "sha": "9937ffa2"
+    }
+  ],
+  "total_records": 7
+}

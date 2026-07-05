@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-07-05T00:36:46Z",
+  "products": [
+    {
+      "id": "aks",
+      "name": "Azure Kubernetes Service"
+    },
+    {
+      "id": "kubernetes-fleet",
+      "name": "Azure Kubernetes Fleet Manager"
+    },
+    {
+      "id": "application-network",
+      "name": "AKS Application Networking"
+    }
+  ]
+}

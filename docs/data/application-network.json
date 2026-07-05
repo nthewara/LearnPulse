@@ -1,0 +1,44 @@
+{
+  "product": "application-network",
+  "generated_at": "2026-07-05T00:36:46Z",
+  "records": [
+    {
+      "id": "49839ede-0",
+      "product": "application-network",
+      "date": "2026-06-17",
+      "kind": "doc-update",
+      "title": "Correct 1.3 (Istio 1.28) compatible AKS range to 1.30-1.34",
+      "summary": "Correct 1.3 (Istio 1.28) compatible AKS range to 1.30-1.34.",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/application-network/supported-versions.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/application-network/supported-versions"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/49839ede67b9636d56bf2668c5b0ac5d1707e49f",
+      "sha": "49839ede"
+    },
+    {
+      "id": "075e928e-0",
+      "product": "application-network",
+      "date": "2026-06-17",
+      "kind": "doc-update",
+      "title": "Sync AppNet supported versions with applink.yaml manifest",
+      "summary": "Sync AppNet supported versions with applink.yaml manifest.",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/application-network/supported-versions.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/application-network/supported-versions"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/075e928e8ecc50e8458710dcfc2ac813dc6b635d",
+      "sha": "075e928e"
+    }
+  ]
+}
