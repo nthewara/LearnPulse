@@ -107,12 +107,12 @@ Ranking weight for `top_changes`: breaking-change > deprecation > ga > new-featu
 
 | kind | badge | color intent |
 |------|-------|--------------|
-| new-feature | 🆕 New | accent |
-| ga | ✅ GA | green |
-| preview | 🧪 Preview | purple |
-| deprecation | ⚠️ Deprecation | amber |
-| breaking-change | 💥 Breaking | red |
-| doc-update | 📝 Update | neutral/muted |
+| new-feature | New | accent |
+| ga | GA | green |
+| preview | Preview | purple |
+| deprecation | Deprecation | amber |
+| breaking-change | Breaking | red |
+| doc-update | Update | neutral/muted |
 
 ## Constraints
 
