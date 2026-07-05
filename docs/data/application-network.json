@@ -1,7 +1,29 @@
 {
   "product": "application-network",
-  "generated_at": "2026-07-05T03:33:30Z",
+  "generated_at": "2026-07-05T06:34:39Z",
   "records": [
+    {
+      "id": "85081da4-0",
+      "product": "application-network",
+      "date": "2026-06-17",
+      "kind": "doc-update",
+      "title": "Revert 1.3 compatible AKS range to 1.30-1.35",
+      "summary": "Updated documentation table.",
+      "change_summary": "Updated documentation table.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:application-network:updated-documentation-table",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/application-network/supported-versions.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/application-network/supported-versions"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/85081da497530070496545520eebc03a988ddda0",
+      "sha": "85081da4"
+    },
     {
       "id": "49839ede-0",
       "product": "application-network",

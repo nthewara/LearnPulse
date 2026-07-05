@@ -1,7 +1,227 @@
 {
   "product": "kubernetes-fleet",
-  "generated_at": "2026-07-05T03:33:30Z",
+  "generated_at": "2026-07-05T06:34:39Z",
   "records": [
+    {
+      "id": "2b642c2a-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-29",
+      "kind": "doc-update",
+      "title": "Apply suggestions from code review",
+      "summary": "Concurrency limits: even if a maintenance window opens, a cluster might not be upgraded due to the concurrency settings for the strategy. Regular polling: Fleet Manager polls for open maintenance windows every 60 minutes, so the maximum wait time is 60 minutes from window open.",
+      "change_summary": "Concurrency limits: even if a maintenance window opens, a cluster might not be upgraded due to the concurrency settings for the strategy. Regular polling: Fleet Manager polls for open maintenance windows every 60 minutes, so the maximum wait time is 60 minutes from window open.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:concurrency-limits-even-if-a-maintenance-window-opens-a-cluster-might-not-be-upg",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/faq.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/faq"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/2b642c2a33ab6151a28e576752bce9a8856ad455",
+      "sha": "2b642c2a"
+    },
+    {
+      "id": "3624fd5a-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-29",
+      "kind": "doc-update",
+      "title": "Another maintenance window attempt",
+      "summary": "When a maintenance window opens, upgrades don't start immediately. Reasons include. Concurrency limits: even if a maintenance window opens a cluster may not be upgraded due to the concurrency settings for the strategy.",
+      "change_summary": "When a maintenance window opens, upgrades don't start immediately. Reasons include. Concurrency limits: even if a maintenance window opens a cluster may not be upgraded due to the concurrency settings for the strategy.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:when-a-maintenance-window-opens-upgrades-don-t-start-immediately-reasons-include",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/faq.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/faq"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/3624fd5a9c8922e0f0b6d1e550c9c49172205ad0",
+      "sha": "3624fd5a"
+    },
+    {
+      "id": "05505085-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-29",
+      "kind": "doc-update",
+      "title": "Add 60 minute polling time for clusters.",
+      "summary": "A maintenance window defines when a cluster can safely be upgraded. Fleet Manager respects the [per-cluster maintenance window settings][aks-maintenance-windows] for each member cluster.",
+      "change_summary": "A maintenance window defines when a cluster can safely be upgraded. Fleet Manager respects the [per-cluster maintenance window settings][aks-maintenance-windows] for each member cluster.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:a-maintenance-window-defines-when-a-cluster-can-safely-be-upgraded-fleet-manager",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/faq.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/faq"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/055050855cc98cb51f9a6f760ccdfe8d5161bdd6",
+      "sha": "05505085"
+    },
+    {
+      "id": "fe119ce7-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-25",
+      "kind": "doc-update",
+      "title": "Add extension resource requirements; Apply LAA suggestions.",
+      "summary": "This article provides a conceptual overview of how Azure Kubernetes Fleet Manager integrates with Azure Arc-enabled Kubernetes clusters to enable unified multicluster management across hybrid and multicloud environments. The integration between Azure Kubernetes Fleet Manager and Azure Arc-enabled Kubernetes clusters extends centralized multicluster resource management beyond Azure-native AKS clusters, including many of the most popular K.",
+      "change_summary": "This article provides a conceptual overview of how Azure Kubernetes Fleet Manager integrates with Azure Arc-enabled Kubernetes clusters to enable unified multicluster management across hybrid and multicloud environments. The integration between Azure Kubernetes Fleet Manager and Azure Arc-enabled Kubernetes clusters extends centralized multicluster resource management beyond Azure-native AKS clusters, including many of the most popular K.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:this-article-provides-a-conceptual-overview-of-how-azure-kubernetes-fleet-manage",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/concepts-fleet-arc-integration.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/concepts-fleet-arc-integration"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/fe119ce7904a70d9f8fbb925f35dc3c36539ecc4",
+      "sha": "fe119ce7"
+    },
+    {
+      "id": "3e0ab7f8-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-22",
+      "kind": "doc-update",
+      "title": "hub cluster reconcile. ADO item #38447312",
+      "summary": "The Fleet Manager hub cluster is a Microsoft-managed AKS cluster created in your subscription. You don't need to take any action on the hub cluster. If there's an issue in provisioning or operating the hub cluster, it can move to a Failed state.",
+      "change_summary": "The Fleet Manager hub cluster is a Microsoft-managed AKS cluster created in your subscription. You don't need to take any action on the hub cluster. If there's an issue in provisioning or operating the hub cluster, it can move to a Failed state.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:the-fleet-manager-hub-cluster-is-a-microsoft-managed-aks-cluster-created-in-your",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/faq.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/faq"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/3e0ab7f8e78ecb6df5500e894377e8e742207eeb",
+      "sha": "3e0ab7f8"
+    },
+    {
+      "id": "cd387ba7-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-22",
+      "kind": "doc-update",
+      "title": "Fix incorrect namespace, apply LAA suggestions.",
+      "summary": "Azure Kubernetes Fleet Manager intelligent resource placement can deploy the same resource to multiple clusters across a fleet. Often, you need to modify the resource configuration to enforce rules around behavior in dif. Modifying a resource configuration is useful in situations such as.",
+      "change_summary": "Azure Kubernetes Fleet Manager intelligent resource placement can deploy the same resource to multiple clusters across a fleet. Often, you need to modify the resource configuration to enforce rules around behavior in dif. Modifying a resource configuration is useful in situations such as.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:azure-kubernetes-fleet-manager-intelligent-resource-placement-can-deploy-the-sam",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/howto-use-overrides-customize-resources-placement.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/howto-use-overrides-customize-resources-placement"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/cd387ba76972f7071ae5296b70b0aa3c467dc68c",
+      "sha": "cd387ba7"
+    },
+    {
+      "id": "aee93756-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-19",
+      "kind": "doc-update",
+      "title": "Add supported cluster types for upgrades.",
+      "summary": "If you want Fleet Manager to support more than 1,000 clusters, add feedback. Fleet Manager allows authorized users to add any AKS or Arc-enabled cluster in any Azure subscription and region as long as the Azure subscription is associated with the same Microsoft Entra ID tenant as the Fleet Manage.",
+      "change_summary": "If you want Fleet Manager to support more than 1,000 clusters, add feedback. Fleet Manager allows authorized users to add any AKS or Arc-enabled cluster in any Azure subscription and region as long as the Azure subscription is associated with the same Microsoft Entra ID tenant as the Fleet Manage.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:if-you-want-fleet-manager-to-support-more-than-1-000-clusters-add-feedback-fleet",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/faq.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/faq"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/aee937564ea23469bec6671e2a17ff0add0d0abc",
+      "sha": "aee93756"
+    },
+    {
+      "id": "dbf3e1ce-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-19",
+      "kind": "doc-update",
+      "title": "FIx up cluster types joining as  members.",
+      "summary": "Fleet Manager allows authorized users to add any AKS, AKS Automatic, or Arc-enabled Kubernetes cluster in any Azure subscription and region as long as the Azure subscription is associated with the same Microsoft Entra ID.",
+      "change_summary": "Fleet Manager allows authorized users to add any AKS, AKS Automatic, or Arc-enabled Kubernetes cluster in any Azure subscription and region as long as the Azure subscription is associated with the same Microsoft Entra ID.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:fleet-manager-allows-authorized-users-to-add-any-aks-aks-automatic-or-arc-enable",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/faq.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/faq"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/dbf3e1cebd808a8297c75c9286976fa7e547d228",
+      "sha": "dbf3e1ce"
+    },
+    {
+      "id": "50baaa66-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-19",
+      "kind": "doc-update",
+      "title": "Tweaks to clean up doc.",
+      "summary": "When you work with Azure Kubernetes Fleet Manager, understanding the status of your ClusterResourcePlacement resources is crucial for monitoring deployment progress and troubleshooting issues. When you work with Azure Kubernetes Fleet Manager, understanding the status of your ResourcePlacement resources is crucial for monitoring deployment progress and troubleshooting issues.",
+      "change_summary": "When you work with Azure Kubernetes Fleet Manager, understanding the status of your ClusterResourcePlacement resources is crucial for monitoring deployment progress and troubleshooting issues. When you work with Azure Kubernetes Fleet Manager, understanding the status of your ResourcePlacement resources is crucial for monitoring deployment progress and troubleshooting issues.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:when-you-work-with-azure-kubernetes-fleet-manager-understanding-the-status-of-yo",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/howto-understand-placement.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/howto-understand-placement"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/50baaa660f7039bcbc49b9ea33ee55545a398f1d",
+      "sha": "50baaa66"
+    },
+    {
+      "id": "99a42e71-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-19",
+      "kind": "doc-update",
+      "title": "Remove duplicate topic.",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/howto-understand-placement.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/howto-understand-placement"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/99a42e716c3388848f880bd99d7b9a021441bd36",
+      "sha": "99a42e71"
+    },
     {
       "id": "55176997-0",
       "product": "kubernetes-fleet",

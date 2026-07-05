@@ -1,7 +1,293 @@
 {
   "product": "aks",
-  "generated_at": "2026-07-05T03:33:30Z",
+  "generated_at": "2026-07-05T06:34:39Z",
   "records": [
+    {
+      "id": "817854da-0",
+      "product": "aks",
+      "date": "2026-07-02",
+      "kind": "doc-update",
+      "title": "Add note on Azure Spot node pools for stateful workloads",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/stateful-workloads-overview.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/stateful-workloads-overview"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/817854dafd8d334fd9b702dfcf19f2146d068431",
+      "sha": "817854da"
+    },
+    {
+      "id": "32bc8fb9-0",
+      "product": "aks",
+      "date": "2026-07-02",
+      "kind": "doc-update",
+      "title": "Address style review comments: fix heading capitalization and remove redundant word",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/create-volume-azure-files.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/create-volume-azure-files"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/32bc8fb9be4a6710ca3eddd9de21e7b6859d24e1",
+      "sha": "32bc8fb9"
+    },
+    {
+      "id": "770a4253-0",
+      "product": "aks",
+      "date": "2026-07-02",
+      "kind": "doc-update",
+      "title": "Merge pull request #3439 from andyzhangx/patch-9",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/create-volume-azure-files.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/create-volume-azure-files"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/770a4253a53d75b5fc0b7a4fcc07907afa4db698",
+      "sha": "770a4253"
+    },
+    {
+      "id": "baf56336-0",
+      "product": "aks",
+      "date": "2026-07-02",
+      "kind": "doc-update",
+      "title": "Enhance documentation for AKS private cluster FQDN",
+      "summary": "When you create an AKS private cluster by using --enable-private-cluster, AKS deploys the Kubernetes API server through a private endpoint inside the virtual network. By default, AKS might still create a public DNS name. Use the following guidance.",
+      "change_summary": "When you create an AKS private cluster by using --enable-private-cluster, AKS deploys the Kubernetes API server through a private endpoint inside the virtual network. By default, AKS might still create a public DNS name. Use the following guidance.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:when-you-create-an-aks-private-cluster-by-using-enable-private-cluster-aks-deplo",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/private-clusters.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/private-clusters"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/baf5633697f0e374f094f872d4dbab215e759fd9",
+      "sha": "baf56336"
+    },
+    {
+      "id": "1e45a7d2-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/node-auto-repair.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/node-auto-repair"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/1e45a7d20a68fde0af6691ec6a47107bdfd02031",
+      "sha": "1e45a7d2"
+    },
+    {
+      "id": "47e8cc24-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Merge pull request #3442 from matthchr/matthchr/small-docs-fixup",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/node-auto-provisioning-upgrade-image.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/node-auto-provisioning-upgrade-image"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/47e8cc244e5c88c943ac65fd9d8a42c9a8af8788",
+      "sha": "47e8cc24"
+    },
+    {
+      "id": "50347a50-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "For production workloads, this model is the recommended default ingress model on AKS Automatic. Starting with AKS version 1.36, new AKS Automatic clusters use Kubernetes Gateway API via the application routing add-on by. Updated documentation table.",
+      "change_summary": "For production workloads, this model is the recommended default ingress model on AKS Automatic. Starting with AKS version 1.36, new AKS Automatic clusters use Kubernetes Gateway API via the application routing add-on by. Updated documentation table.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:for-production-workloads-this-model-is-the-recommended-default-ingress-model-on-",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/aks/app-routing-gateway-api.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/app-routing-gateway-api"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/50347a507d805ff39e7797bdc3e3916103114f2a",
+      "sha": "50347a50"
+    },
+    {
+      "id": "fe5038c4-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Remove 90d limit comment",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/node-auto-provisioning-upgrade-image.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/node-auto-provisioning-upgrade-image"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/fe5038c4b573a4437c7b4ac66e2982872cd73808",
+      "sha": "fe5038c4"
+    },
+    {
+      "id": "b861a445-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "adds terraform sample",
+      "summary": "zonepivotgroups: portal-terraform. You can apply and enforce built-in security policies on your Azure Kubernetes Service (AKS) clusters by using [Azure Policy][azure-policy]. Azure Policy helps you enforce organizational standards and assess compliance at.",
+      "change_summary": "zonepivotgroups: portal-terraform. You can apply and enforce built-in security policies on your Azure Kubernetes Service (AKS) clusters by using [Azure Policy][azure-policy]. Azure Policy helps you enforce organizational standards and assess compliance at.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:zonepivotgroups-portal-terraform-you-can-apply-and-enforce-built-in-security-pol",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/use-azure-policy.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/use-azure-policy"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/b861a4454eeb8513ac8ef3f2d433d6aa1884b494",
+      "sha": "b861a445"
+    },
+    {
+      "id": "4691179d-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Revise EiT note for NFS file shares",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/create-volume-azure-files.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/create-volume-azure-files"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/4691179dc09170929ff844db470b97338ee97f27",
+      "sha": "4691179d"
+    },
+    {
+      "id": "d2b2ae59-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Clarify managed identity support status for Azure Files",
+      "summary": "Updated documentation page.",
+      "change_summary": "Updated documentation page.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:updated-documentation-page",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/create-volume-azure-files.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/create-volume-azure-files"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/d2b2ae59ffefce53bd61294e2d4148cfd3588e09",
+      "sha": "d2b2ae59"
+    },
+    {
+      "id": "ec137db4-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/dns-concepts.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/dns-concepts"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/ec137db440e0fc98e4b98d9313e3d9901aaa5124",
+      "sha": "ec137db4"
+    },
+    {
+      "id": "ea0e8632-0",
+      "product": "aks",
+      "date": "2026-07-01",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "change_summary": "Applies-to matrix now includes AKS Automatic and AKS Standard.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:aks:applies-to-matrix-now-includes-aks-automatic-and-aks-standard",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/aks/node-resource-group-lockdown.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/node-resource-group-lockdown"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/ea0e8632339eee28cc3a20c618d7260fe484911b",
+      "sha": "ea0e8632"
+    },
     {
       "id": "15ab5bf0-0",
       "product": "aks",
