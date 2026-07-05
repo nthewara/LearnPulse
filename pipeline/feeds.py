@@ -13,68 +13,25 @@ from datetime import datetime, timedelta, timezone
 
 try:
     import db
-    import summarize
+    import derived
 except ImportError:  # pragma: no cover
     from pipeline import db
-    from pipeline import summarize
+    from pipeline import derived
 
 FEED_CAP = 200
 WINDOW_DAYS = 7
-ALL_KINDS = ["new-feature", "ga", "preview", "deprecation", "breaking-change",
-             "doc-update"]
+ALL_KINDS = ["new-feature", "ga", "preview", "deprecation", "breaking-change", "doc-update"]
 KIND_WEIGHT = {"breaking-change": 5, "deprecation": 4, "ga": 3,
                "new-feature": 2, "preview": 1, "doc-update": 0}
 TOP_CHANGES_CAP = 8
 
 
-def _markdown_page(filename: str) -> bool:
-    low = (filename or "").lower()
-    return low.endswith(".md") and "/includes/" not in low and "/media/" not in low
-
-
 def page_change_category(files, reasons) -> str:
-    """Return the dashboard category for a record.
-
-    New pages win for mixed commits so a commit that adds a page and edits
-    supporting pages is surfaced with the page launch.
-    """
-    reasons = reasons or []
-    files = files or []
-
-    for f in files:
-        if isinstance(f, dict):
-            if f.get("status") == "added" and _markdown_page(f.get("filename", "")):
-                return "new-page"
-
-    if "new-file" in reasons:
-        for f in files:
-            filename = f.get("filename", "") if isinstance(f, dict) else str(f)
-            if _markdown_page(filename):
-                return "new-page"
-
-    for f in files:
-        if isinstance(f, dict):
-            if f.get("status") in {"modified", "renamed"} and _markdown_page(f.get("filename", "")):
-                return "existing-page"
-        elif _markdown_page(str(f)):
-            return "existing-page"
-
-    return "existing-page"
+    return derived.page_change_category(files, reasons)
 
 
 def _batch_key(category: str, product: str, summary: str, title: str) -> str:
-    base = summary or title or "documentation update"
-    normalized = "".join(ch.lower() if ch.isalnum() else "-" for ch in base)
-    normalized = "-".join(part for part in normalized.split("-") if part)
-    return f"{category}:{product}:{normalized[:80]}"
-
-
-def _raw_patch_files(row) -> list:
-    try:
-        patch_summary = json.loads(row["raw_patch_summary"] or "{}")
-    except (KeyError, TypeError, json.JSONDecodeError):
-        return []
-    return patch_summary.get("files") or []
+    return derived.batch_key(category, product, summary, title)
 
 
 def _optional_row_text(row, key: str) -> str | None:
@@ -89,24 +46,30 @@ def _optional_row_text(row, key: str) -> str | None:
 
 
 def _record_to_json(row) -> dict:
-    reasons = json.loads(row["reasons_json"] or "[]")
-    files = json.loads(row["files_json"] or "[]")
-    category_files = _raw_patch_files(row) or files
-    category = page_change_category(category_files, reasons)
-    change_summary = summarize.doc_change_summary(row)
+    reasons = row.get("reasons") or []
+    files = row.get("files") or []
+    doc_urls = row.get("doc_urls") or []
+    change_summary = row.get("change_summary") or row.get("summary") or ""
+    category = row.get("page_change_category") or "existing-page"
+    batch_key = row.get("batch_key") or _batch_key(
+        category,
+        row["product"],
+        change_summary,
+        row.get("title") or "",
+    )
     record = {
         "id": row["id"],
         "product": row["product"],
         "date": row["date"],
         "kind": row["kind"] or "doc-update",
         "title": row["title"] or "",
-        "summary": change_summary or row["summary"] or "",
-        "change_summary": change_summary or row["summary"] or "",
+        "summary": change_summary,
+        "change_summary": change_summary,
         "page_change_category": category,
-        "batch_key": _batch_key(category, row["product"], change_summary, row["title"] or ""),
+        "batch_key": batch_key,
         "reasons": reasons,
         "files": files,
-        "doc_urls": json.loads(row["doc_urls_json"] or "[]"),
+        "doc_urls": doc_urls,
         "commit_url": row["commit_url"],
         "sha": (row["sha"] or "")[:8],
     }
@@ -126,64 +89,104 @@ def _write_json(path: str, payload: dict) -> None:
         fh.write("\n")
 
 
-def run(products=None) -> dict:
-    conn = db.connect()
-    all_products = db.load_products()
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+def _strip_generated_at(value):
+    if isinstance(value, dict):
+        return {
+            key: _strip_generated_at(child)
+            for key, child in value.items()
+            if key != "generated_at"
+        }
+    if isinstance(value, list):
+        return [_strip_generated_at(child) for child in value]
+    return value
 
-    # products.json — always lists the full watchlist
-    _write_json(os.path.join(db.DOCS_DATA_DIR, "products.json"), {
-        "generated_at": generated_at,
-        "products": [{"id": p["id"], "name": p["name"]} for p in all_products],
-    })
 
-    counters = {"files_written": 1, "records_total": 0}
+def _write_json_if_changed(path: str, payload: dict) -> bool:
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            existing = json.load(fh)
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing = None
+    if existing is not None and _strip_generated_at(existing) == _strip_generated_at(payload):
+        return False
+    _write_json(path, payload)
+    return True
 
-    # per-product feeds
+
+def build_payloads(conn, all_products, generated_at: str | None = None,
+                   now: datetime | None = None) -> dict[str, dict]:
+    now = now or datetime.now(timezone.utc)
+    generated_at = generated_at or now.strftime("%Y-%m-%dT%H:%M:%SZ")
+    payloads: dict[str, dict] = {
+        "products": {
+            "generated_at": generated_at,
+            "products": [{"id": p["id"], "name": p["name"]} for p in all_products],
+        }
+    }
+
     all_records: list[dict] = []
-    for p in all_products:
-        rows = db.signal_records(conn, p["id"])
-        records = [_record_to_json(r) for r in rows]
+    for product in all_products:
+        rows = db.signal_records(conn, product["id"])
+        records = [_record_to_json(row) for row in rows]
         all_records.extend(records)
-        _write_json(os.path.join(db.DOCS_DATA_DIR, f"{p['id']}.json"), {
-            "product": p["id"],
+        payloads[product["id"]] = {
+            "product": product["id"],
             "generated_at": generated_at,
             "records": records[:FEED_CAP],
-        })
-        counters["files_written"] += 1
-        counters["records_total"] += len(records)
-        print(f"[feeds] {p['id']}.json: {min(len(records), FEED_CAP)} records "
-              f"({len(records)} total non-noise)")
+        }
 
-    # summary.json — 7-day window
-    window_start = (datetime.now(timezone.utc) - timedelta(days=WINDOW_DAYS)) \
-        .strftime("%Y-%m-%d")
-    window = [r for r in all_records if r["date"] >= window_start]
+    window_start = (now - timedelta(days=WINDOW_DAYS)).strftime("%Y-%m-%d")
+    window = [record for record in all_records if record["date"] >= window_start]
 
-    counts_by_kind = {k: 0 for k in ALL_KINDS}
-    for r in window:
-        counts_by_kind[r["kind"]] = counts_by_kind.get(r["kind"], 0) + 1
+    counts_by_kind = {kind: 0 for kind in ALL_KINDS}
+    for record in window:
+        counts_by_kind[record["kind"]] = counts_by_kind.get(record["kind"], 0) + 1
 
-    counts_by_product = {p["id"]: 0 for p in all_products}
-    for r in window:
-        counts_by_product[r["product"]] = counts_by_product.get(r["product"], 0) + 1
+    counts_by_product = {product["id"]: 0 for product in all_products}
+    for record in window:
+        counts_by_product[record["product"]] = counts_by_product.get(record["product"], 0) + 1
 
-    # ranked by kind weight desc, tie-break newest first (stable two-pass sort)
-    top_changes = sorted(window, key=lambda r: r["date"], reverse=True)
-    top_changes = sorted(top_changes, key=lambda r: KIND_WEIGHT.get(r["kind"], 0),
-                         reverse=True)[:TOP_CHANGES_CAP]
+    top_changes = sorted(window, key=lambda record: record["date"], reverse=True)
+    top_changes = sorted(
+        top_changes,
+        key=lambda record: KIND_WEIGHT.get(record["kind"], 0),
+        reverse=True,
+    )[:TOP_CHANGES_CAP]
 
-    _write_json(os.path.join(db.DOCS_DATA_DIR, "summary.json"), {
+    payloads["summary"] = {
         "generated_at": generated_at,
         "window_days": WINDOW_DAYS,
         "counts_by_kind": counts_by_kind,
         "counts_by_product": counts_by_product,
         "top_changes": top_changes,
         "total_records": len(window),
-    })
-    counters["files_written"] += 1
-    print(f"[feeds] summary.json: {len(window)} records in {WINDOW_DAYS}-day window, "
-          f"{len(top_changes)} top changes")
+    }
+    return payloads
+
+
+def run(products=None) -> dict:
+    conn = db.connect()
+    all_products = db.load_products()
+    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    payloads = build_payloads(conn, all_products, generated_at)
+
+    counters = {"files_written": 0, "records_total": 0}
+    if _write_json_if_changed(os.path.join(db.DOCS_DATA_DIR, "products.json"), payloads["products"]):
+        counters["files_written"] += 1
+
+    for product in all_products:
+        payload = payloads[product["id"]]
+        records = payload["records"]
+        rows_total = len(db.signal_records(conn, product["id"]))
+        if _write_json_if_changed(os.path.join(db.DOCS_DATA_DIR, f"{product['id']}.json"), payload):
+            counters["files_written"] += 1
+        counters["records_total"] += rows_total
+        print(f"[feeds] {product['id']}.json: {len(records)} records ({rows_total} total non-noise)")
+
+    if _write_json_if_changed(os.path.join(db.DOCS_DATA_DIR, "summary.json"), payloads["summary"]):
+        counters["files_written"] += 1
+    print(f"[feeds] summary.json: {payloads['summary']['total_records']} records in "
+          f"{WINDOW_DAYS}-day window, {len(payloads['summary']['top_changes'])} top changes")
 
     conn.close()
     return counters

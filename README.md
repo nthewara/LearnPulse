@@ -25,8 +25,9 @@ See [PLAN.md](PLAN.md) for the original design,
 - **Python pipeline** in `pipeline/` that ingests path-scoped GitHub commits,
   triages noisy documentation churn, summarizes signal records, emits JSON feeds,
   and writes weekly Markdown digests.
-- **SQLite system of record** at `data/learnpulse.db`, with incremental cursors,
-  dedupe state, raw commit data, triage fields, and summaries.
+- **JSON system of record** in `data/records/<product>.json` plus
+  `data/state.json`, with incremental cursors, dedupe state, raw commit data,
+  triage fields, and summaries.
 - **GitHub Pages dashboard** in `docs/`: vanilla `index.html`, `style.css`, and
   `app.js` reading committed JSON from `docs/data/`.
 - **Refresh workflow** in `.github/workflows/pipeline.yml`, currently run manually
@@ -39,7 +40,8 @@ See [PLAN.md](PLAN.md) for the original design,
 products.yml ──▶ pipeline/ (Python, GitHub Actions on manual dispatch)
                    ingest → triage → summarize → feeds → digest
                      │
-                     ├─▶ data/learnpulse.db      (SQLite system of record)
+                     ├─▶ data/records/*.json     (JSON record store)
+                     ├─▶ data/state.json         (cursors + dedupe state)
                      ├─▶ docs/data/*.json        (feeds the website reads)
                      └─▶ digests/YYYY-Www.md     (weekly digest markdown)
 
@@ -101,10 +103,9 @@ Pipeline arguments:
 python3 -m unittest discover -s tests -v
 ```
 
-Frontend Playwright E2E tests cover the author meta row: valid GitHub login
-links, display-name fallback with no link, multi-author overflow, missing and
-bot-only authors, invalid logins rendered as plain text, and no avatar/external
-requests.
+Frontend Playwright E2E tests cover the local JSON-fed dashboard load path,
+card rendering, product filters, author meta rows, and the no-external-request
+runtime contract.
 
 ```bash
 npm ci

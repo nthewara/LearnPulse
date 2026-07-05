@@ -1,5 +1,7 @@
 const { test, expect } = require("@playwright/test");
 
+let remoteRequests;
+
 const summary = {
   generated_at: "2026-07-05T00:00:00Z",
   window_days: 7,
@@ -114,6 +116,12 @@ const feed = {
 };
 
 test.beforeEach(async ({ page }) => {
+  remoteRequests = [];
+  page.on("request", request => {
+    const url = new URL(request.url());
+    if (url.origin !== "http://127.0.0.1:4173") remoteRequests.push(url.href);
+  });
+
   await page.route("**/data/summary.json", route => {
     route.fulfill({ contentType: "application/json", body: JSON.stringify(summary) });
   });
@@ -123,6 +131,10 @@ test.beforeEach(async ({ page }) => {
   await page.route("**/data/aks.json", route => {
     route.fulfill({ contentType: "application/json", body: JSON.stringify(feed) });
   });
+});
+
+test.afterEach(() => {
+  expect(remoteRequests).toEqual([]);
 });
 
 test("renders valid author logins as GitHub links after commit metadata", async ({ page }) => {
@@ -172,13 +184,6 @@ test("renders invalid author values as plain text without GitHub links", async (
 });
 
 test("does not request avatars or other external resources", async ({ page }) => {
-  const remoteRequests = [];
-  page.on("request", request => {
-    const url = new URL(request.url());
-    if (url.origin !== "http://127.0.0.1:4173") remoteRequests.push(url.href);
-  });
-
   await page.goto("/");
   await expect(page.locator(".record")).toHaveCount(5);
-  expect(remoteRequests).toEqual([]);
 });

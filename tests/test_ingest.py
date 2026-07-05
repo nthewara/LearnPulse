@@ -104,11 +104,9 @@ class IngestAuthorTests(unittest.TestCase):
             )
 
         self.assertEqual(counters["new"], 3)
-        rows = conn.execute(
-            "SELECT sha, author_login, author_name FROM change_records ORDER BY sha"
-        ).fetchall()
+        rows = sorted(conn.all_records(), key=lambda record: record["sha"])
         self.assertEqual(
-            [(r["sha"], r["author_login"], r["author_name"]) for r in rows],
+            [(r["sha"], r.get("author_login"), r.get("author_name")) for r in rows],
             [
                 ("aaa11111aaaa1111", "octocat", "Octo Cat"),
                 ("bbb22222bbbb2222", None, "Git Author"),

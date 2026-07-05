@@ -20,7 +20,8 @@ pipeline/run.py
     ingest -> triage -> summarize -> feeds -> digest
        |        |          |          |        |
        v        v          v          v        v
-data/learnpulse.db      docs/data/*.json      digests/YYYY-Www.md
+data/records/*.json
+data/state.json         docs/data/*.json      digests/YYYY-Www.md
                               |
                               v
 docs/index.html + docs/app.js + docs/style.css
@@ -29,8 +30,8 @@ docs/index.html + docs/app.js + docs/style.css
 GitHub Pages: https://nthewara.github.io/LearnPulse/
 ```
 
-There is no application server. The scheduled workflow updates the database,
-JSON feeds, and digests, commits those generated artifacts back to the
+There is no application server. The scheduled workflow updates the JSON record
+store, dashboard feeds, and digests, commits those generated artifacts back to the
 repository, and GitHub Pages serves the static dashboard from `docs/`.
 
 ## Repository layout
@@ -38,13 +39,14 @@ repository, and GitHub Pages serves the static dashboard from `docs/`.
 | Path | Purpose |
 | --- | --- |
 | `products.yml` | Watchlist of `(repo, path, learn_base)` product definitions, including AKS and Azure AI products. |
-| `pipeline/` | Python pipeline stages and SQLite helpers. |
-| `data/learnpulse.db` | SQLite system of record committed with cursors, dedupe state, raw commits, triage, and summaries. |
+| `pipeline/` | Python pipeline stages and JSON storage helpers. |
+| `data/records/<product>.json` | Deterministic per-product record history with raw commit metadata, triage output, summaries, and persisted display fields. |
+| `data/state.json` | Incremental cursors and seen-commit dedupe state. |
 | `docs/` | GitHub Pages site root: static HTML, CSS, JS, and JSON feeds. |
 | `docs/data/` | Generated dashboard feeds: `products.json`, per-product feeds, and `summary.json`. |
 | `digests/` | Generated weekly Markdown digests. |
 | `.github/workflows/pipeline.yml` | Manually dispatched pipeline runner (cron stubbed out). |
-| `tests/` | Stdlib unit tests for ingestion, triage, summarization, and feeds. |
+| `tests/` | Stdlib unit tests for ingestion, triage, summarization, and feeds, plus Playwright E2E tests. |
 
 The data contract between pipeline and website is documented in
 [CONTRACT.md](CONTRACT.md).
@@ -72,16 +74,27 @@ The orchestrator is `pipeline/run.py`, which executes five deterministic stages:
 
 ## Storage model
 
-SQLite is the source of truth. `pipeline/db.py` initializes:
+Committed JSON is the source of truth:
 
-- `cursors`: per-product incremental timestamps.
-- `commits_seen`: dedupe keys so a commit is processed once per product.
-- `change_records`: raw commit metadata, patch summaries, triage output,
-  summaries, Learn URLs, and noise/signal flags.
+- `data/records/<product>.json`: deterministic, line-reviewable per-product
+  record history. Records include raw commit metadata, triage output,
+  summaries, Learn URLs, author fields, noise/signal flags, and persisted
+  derived display fields such as `change_summary`, `page_change_category`, and
+  `batch_key`.
+- `data/state.json`: per-product incremental cursors and seen-commit dedupe
+  keys so a commit is processed once per product.
 
-Generated JSON feeds are optimized for the website and can be regenerated from
-SQLite. Per-product feeds are capped for page weight; older history remains in the
-database.
+Durable records keep only a bounded `patch_excerpt` for debugging
+(`<= 2048` characters), not full raw patches. The pipeline may derive richer
+patch summaries within a single run, but persistent data stays compact and
+reviewable.
+
+Generated dashboard feeds under `docs/data/` are optimized for the website and
+can be regenerated from the JSON store. Per-product feeds are capped for page
+weight; older history remains in `data/records/`. If a single product file grows
+to roughly 5 MB, shard it by year (for example,
+`data/records/<product>/YYYY.json`) in a future migration; do not shard before
+that trigger.
 
 ## Dashboard runtime
 
@@ -135,11 +148,12 @@ are reflected on the live site after Pages rebuilds.
 
 ## Validation
 
-Use the existing tests and syntax check:
+Use the existing tests and syntax checks:
 
 ```bash
 python3 -m unittest discover -s tests -v
 node --check docs/app.js
+npm run test:e2e
 ```
 
 For live validation after deployment, open

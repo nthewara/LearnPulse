@@ -45,6 +45,10 @@ Measured from the current repo:
 - If SQL ergonomics are wanted, hydrate `sqlite3.connect(":memory:")` from NDJSON at
   run start — the query helpers in `pipeline/db.py` survive nearly unchanged.
 
+**Completion note (issue 27):** The storage decision is implemented as
+deterministic JSON records in `data/records/<product>.json` plus
+`data/state.json`, with compact patch excerpts and persisted display fields.
+
 ### Alternatives considered and rejected
 
 | Option | Verdict |

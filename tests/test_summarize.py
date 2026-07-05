@@ -12,7 +12,7 @@ import summarize  # noqa: E402
 def row(title, files):
     return {
         "title": title,
-        "raw_patch_summary": json.dumps({"files": files}),
+        "patch_excerpt": json.dumps({"files": files}),
     }
 
 
