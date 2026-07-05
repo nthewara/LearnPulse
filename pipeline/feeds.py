@@ -77,13 +77,24 @@ def _raw_patch_files(row) -> list:
     return patch_summary.get("files") or []
 
 
+def _optional_row_text(row, key: str) -> str | None:
+    try:
+        value = row[key]
+    except (KeyError, IndexError, TypeError):
+        return None
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    return value or None
+
+
 def _record_to_json(row) -> dict:
     reasons = json.loads(row["reasons_json"] or "[]")
     files = json.loads(row["files_json"] or "[]")
     category_files = _raw_patch_files(row) or files
     category = page_change_category(category_files, reasons)
     change_summary = summarize.doc_change_summary(row)
-    return {
+    record = {
         "id": row["id"],
         "product": row["product"],
         "date": row["date"],
@@ -99,6 +110,13 @@ def _record_to_json(row) -> dict:
         "commit_url": row["commit_url"],
         "sha": (row["sha"] or "")[:8],
     }
+    author_login = _optional_row_text(row, "author_login")
+    author_name = _optional_row_text(row, "author_name")
+    if author_login:
+        record["author"] = author_login
+    if author_name:
+        record["author_name"] = author_name
+    return record
 
 
 def _write_json(path: str, payload: dict) -> None:

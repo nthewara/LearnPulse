@@ -150,6 +150,33 @@ def build_patch_summary(detail: dict, path_prefix: str) -> tuple[str, list[str]]
     return json.dumps(summary, ensure_ascii=False), product_files
 
 
+def _clean_author_value(value) -> str | None:
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    return value or None
+
+
+def commit_author_fields(detail: dict, list_payload: dict) -> tuple[str | None, str | None]:
+    """Extract GitHub login and raw git author name from commit payloads."""
+    detail_author = detail.get("author") if isinstance(detail.get("author"), dict) else {}
+    list_author = (list_payload.get("author")
+                   if isinstance(list_payload.get("author"), dict) else {})
+    author_login = (_clean_author_value(detail_author.get("login"))
+                    or _clean_author_value(list_author.get("login")))
+
+    detail_commit = detail.get("commit") if isinstance(detail.get("commit"), dict) else {}
+    list_commit = (list_payload.get("commit")
+                   if isinstance(list_payload.get("commit"), dict) else {})
+    detail_git_author = (detail_commit.get("author")
+                         if isinstance(detail_commit.get("author"), dict) else {})
+    list_git_author = (list_commit.get("author")
+                       if isinstance(list_commit.get("author"), dict) else {})
+    author_name = (_clean_author_value(detail_git_author.get("name"))
+                   or _clean_author_value(list_git_author.get("name")))
+    return author_login, author_name
+
+
 def ingest_product(conn, product: dict, since_days: int | None,
                    max_commits: int | None) -> dict:
     """Ingest one product. Returns counters."""
@@ -212,6 +239,7 @@ def ingest_product(conn, product: dict, since_days: int | None,
         counters["detail_fetched"] += 1
 
         raw_patch_summary, product_files = build_patch_summary(detail, path)
+        author_login, author_name = commit_author_fields(detail, c)
         record_id = db.next_record_id(conn, sha)
         db.insert_raw_record(
             conn,
@@ -223,6 +251,8 @@ def ingest_product(conn, product: dict, since_days: int | None,
             created_at=_now_iso(),
             raw_commit_message=message,
             raw_patch_summary=raw_patch_summary,
+            author_login=author_login,
+            author_name=author_name,
         )
         db.mark_seen(conn, sha, pid, _now_iso())
         counters["new"] += 1

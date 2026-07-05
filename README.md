@@ -101,6 +101,16 @@ Pipeline arguments:
 python3 -m unittest discover -s tests -v
 ```
 
+Frontend Playwright E2E tests cover the author meta row: valid GitHub login
+links, display-name fallback with no link, multi-author overflow, missing and
+bot-only authors, invalid logins rendered as plain text, and no avatar/external
+requests.
+
+```bash
+npm ci
+npm run test:e2e
+```
+
 ## Adding a product
 
 Add an entry to [products.yml](products.yml) — any `(repo, path)` pair in a

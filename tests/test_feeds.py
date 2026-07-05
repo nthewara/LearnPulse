@@ -107,6 +107,45 @@ class FeedCategoryTests(unittest.TestCase):
         ])
         self.assertTrue(record["batch_key"].startswith("existing-page:azure-ai-search:"))
 
+    def test_record_json_emits_author_fields_without_affecting_batch_key(self):
+        row = self._author_row(author_login="octocat", author_name="Octo Cat")
+        no_author_row = self._author_row(author_login="", author_name=None)
+
+        record = feeds._record_to_json(row)
+        no_author_record = feeds._record_to_json(no_author_row)
+
+        self.assertEqual(record["author"], "octocat")
+        self.assertEqual(record["author_name"], "Octo Cat")
+        self.assertNotIn("author", no_author_record)
+        self.assertNotIn("author_name", no_author_record)
+        self.assertEqual(record["batch_key"], no_author_record["batch_key"])
+
+    def _author_row(self, author_login, author_name):
+        return {
+            "id": "abc12345-0",
+            "product": "aks",
+            "date": "2026-07-05",
+            "kind": "doc-update",
+            "title": "Update widget guidance",
+            "summary": "Updated widget guidance.",
+            "reasons_json": json.dumps(["doc-update"]),
+            "files_json": json.dumps(["articles/aks/widget-autoscaling.md"]),
+            "doc_urls_json": json.dumps([]),
+            "commit_url": "https://github.com/example/repo/commit/abc12345",
+            "sha": "abc123456789",
+            "raw_patch_summary": json.dumps({
+                "files": [
+                    {
+                        "filename": "articles/aks/widget-autoscaling.md",
+                        "status": "modified",
+                        "patch": "+Widget guidance now includes rollout notes.",
+                    },
+                ],
+            }),
+            "author_login": author_login,
+            "author_name": author_name,
+        }
+
 
 if __name__ == "__main__":
     unittest.main()

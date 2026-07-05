@@ -1,0 +1,11 @@
+{
+  "name": "learnpulse",
+  "private": true,
+  "scripts": {
+    "check:js": "node --check docs/app.js",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1"
+  }
+}

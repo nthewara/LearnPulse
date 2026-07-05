@@ -467,6 +467,16 @@ a.card-title:hover { color: var(--link); }
   gap: 0.4rem;
 }
 .record .meta .sep { color: var(--line-strong); }
+.authors {
+  color: var(--faint);
+}
+.authors .author,
+.authors .author-overflow {
+  color: var(--faint);
+}
+.authors a.author {
+  color: var(--link);
+}
 .tag {
   background: var(--panel-2);
   border-radius: 4px;

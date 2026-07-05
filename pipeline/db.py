@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS change_records (
     commit_url         TEXT,
     sha                TEXT NOT NULL,
     created_at         TEXT NOT NULL,
+    author_login       TEXT,
+    author_name        TEXT,
     is_noise           INTEGER,
     raw_commit_message TEXT,
     raw_patch_summary  TEXT
@@ -54,12 +56,27 @@ CREATE INDEX IF NOT EXISTS idx_records_sha ON change_records (sha);
 """
 
 
+def _ensure_change_record_author_columns(conn: sqlite3.Connection) -> None:
+    columns = {
+        row["name"]
+        for row in conn.execute("PRAGMA table_info(change_records)").fetchall()
+    }
+    if "author_login" not in columns:
+        conn.execute("ALTER TABLE change_records ADD COLUMN author_login TEXT")
+    if "author_name" not in columns:
+        conn.execute("ALTER TABLE change_records ADD COLUMN author_name TEXT")
+
+
 def connect(db_path: str = DB_PATH) -> sqlite3.Connection:
     """Open (and initialize if needed) the LearnPulse database."""
-    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    db_dir = os.path.dirname(db_path)
+    if db_dir:
+        os.makedirs(db_dir, exist_ok=True)
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     conn.executescript(SCHEMA)
+    _ensure_change_record_author_columns(conn)
+    conn.commit()
     return conn
 
 
@@ -118,13 +135,15 @@ def next_record_id(conn: sqlite3.Connection, sha: str) -> str:
 
 
 def insert_raw_record(conn, *, record_id, product, date, commit_url, sha,
-                      created_at, raw_commit_message, raw_patch_summary) -> None:
+                      created_at, raw_commit_message, raw_patch_summary,
+                      author_login=None, author_name=None) -> None:
     conn.execute(
         "INSERT INTO change_records "
-        "(id, product, date, commit_url, sha, created_at, raw_commit_message, raw_patch_summary) "
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        "(id, product, date, commit_url, sha, created_at, author_login, author_name, "
+        "raw_commit_message, raw_patch_summary) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         (record_id, product, date, commit_url, sha, created_at,
-         raw_commit_message, raw_patch_summary),
+         author_login, author_name, raw_commit_message, raw_patch_summary),
     )
 
 

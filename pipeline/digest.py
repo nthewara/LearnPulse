@@ -31,6 +31,24 @@ def _week_bounds(today: date) -> tuple[date, date, int, int]:
     return monday, sunday, iso_year, iso_week
 
 
+def _optional_row_text(row, key: str) -> str | None:
+    try:
+        value = row[key]
+    except (KeyError, IndexError, TypeError):
+        return None
+    if not isinstance(value, str):
+        return None
+    value = value.strip()
+    return value or None
+
+
+def _author_credit(row) -> str:
+    author_login = _optional_row_text(row, "author_login")
+    if author_login:
+        return f"@{author_login}"
+    return _optional_row_text(row, "author_name") or ""
+
+
 def run() -> dict:
     conn = db.connect()
     products = db.load_products()
@@ -61,8 +79,10 @@ def run() -> dict:
             links = [f"[commit]({r['commit_url']})"]
             if doc_urls:
                 links.insert(0, f"[doc]({doc_urls[0]})")
+            credit = _author_credit(r)
+            suffix = f" — {credit}" if credit else ""
             lines.append(f"- {emoji} **{r['title']}** ({r['kind']}, {r['date']}) — "
-                         + " · ".join(links))
+                         + " · ".join(links) + suffix)
         lines.append("")
         total += len(rows)
 
