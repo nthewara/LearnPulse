@@ -1,0 +1,20 @@
+# LearnPulse product watchlist.
+# Each product is a (repo, path) pair — services can live in the azure-docs
+# monolith or in dedicated docs repos. learn_base maps repo paths to published
+# Learn URLs (from the repo's docfx.json: src=articles, dest=. under /azure/).
+products:
+  - id: aks
+    name: Azure Kubernetes Service
+    repo: MicrosoftDocs/azure-aks-docs
+    path: articles/aks
+    learn_base: https://learn.microsoft.com/azure/aks/
+  - id: kubernetes-fleet
+    name: Azure Kubernetes Fleet Manager
+    repo: MicrosoftDocs/azure-aks-docs
+    path: articles/kubernetes-fleet
+    learn_base: https://learn.microsoft.com/azure/kubernetes-fleet/
+  - id: application-network
+    name: AKS Application Networking
+    repo: MicrosoftDocs/azure-aks-docs
+    path: articles/application-network
+    learn_base: https://learn.microsoft.com/azure/application-network/

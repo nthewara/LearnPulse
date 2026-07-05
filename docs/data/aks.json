@@ -1,0 +1,104 @@
+{
+ "product": "aks",
+ "generated_at": "2026-07-05T03:00:00Z",
+ "records": [
+  {
+   "id": "817854da-0",
+   "product": "aks",
+   "date": "2026-07-02",
+   "kind": "doc-update",
+   "title": "Add note on Azure Spot node pools for stateful workloads",
+   "summary": "Guidance added clarifying that Azure Spot node pools are not recommended for stateful workloads due to eviction behavior.",
+   "reasons": [
+    "body-change"
+   ],
+   "files": [
+    "articles/aks/spot-node-pools.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/spot-node-pools"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/817854da",
+   "sha": "817854da"
+  },
+  {
+   "id": "baf56336-0",
+   "product": "aks",
+   "date": "2026-07-02",
+   "kind": "doc-update",
+   "title": "Enhance documentation for AKS private cluster FQDN",
+   "summary": "Expanded explanation of private cluster FQDN resolution options and custom DNS configuration.",
+   "reasons": [
+    "body-change",
+    "table-edit"
+   ],
+   "files": [
+    "articles/aks/private-clusters.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/private-clusters"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/baf56336",
+   "sha": "baf56336"
+  },
+  {
+   "id": "aa11bb22-0",
+   "product": "aks",
+   "date": "2026-07-01",
+   "kind": "preview",
+   "title": "Node auto-repair notifications (preview)",
+   "summary": "New page documenting preview support for node auto-repair event notifications via Azure Event Grid.",
+   "reasons": [
+    "new-file",
+    "keyword:preview"
+   ],
+   "files": [
+    "articles/aks/node-auto-repair-notifications.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/node-auto-repair-notifications"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/aa11bb22",
+   "sha": "aa11bb22"
+  },
+  {
+   "id": "cc33dd44-0",
+   "product": "aks",
+   "date": "2026-06-29",
+   "kind": "ga",
+   "title": "AKS Automatic reaches general availability in more regions",
+   "summary": "Region availability table updated marking AKS Automatic as generally available in six additional regions.",
+   "reasons": [
+    "keyword:ga",
+    "table-edit"
+   ],
+   "files": [
+    "articles/aks/intro-aks-automatic.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/intro-aks-automatic"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/cc33dd44",
+   "sha": "cc33dd44"
+  },
+  {
+   "id": "ee55ff66-0",
+   "product": "aks",
+   "date": "2026-06-27",
+   "kind": "deprecation",
+   "title": "GPU VM size retirement notice for NC-series v2",
+   "summary": "Added retirement notice: NC-series v2 GPU node pools will be unsupported after August 2026; migration guidance linked.",
+   "reasons": [
+    "keyword:retirement"
+   ],
+   "files": [
+    "articles/aks/gpu-cluster.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/gpu-cluster"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/ee55ff66",
+   "sha": "ee55ff66"
+  }
+ ]
+}

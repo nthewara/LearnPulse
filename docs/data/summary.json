@@ -1,0 +1,138 @@
+{
+ "generated_at": "2026-07-05T03:00:00Z",
+ "window_days": 7,
+ "counts_by_kind": {
+  "breaking-change": 0,
+  "deprecation": 0,
+  "ga": 1,
+  "new-feature": 1,
+  "preview": 1,
+  "doc-update": 3
+ },
+ "counts_by_product": {
+  "aks": 4,
+  "kubernetes-fleet": 1,
+  "application-network": 1
+ },
+ "top_changes": [
+  {
+   "id": "cc33dd44-0",
+   "product": "aks",
+   "date": "2026-06-29",
+   "kind": "ga",
+   "title": "AKS Automatic reaches general availability in more regions",
+   "summary": "Region availability table updated marking AKS Automatic as generally available in six additional regions.",
+   "reasons": [
+    "keyword:ga",
+    "table-edit"
+   ],
+   "files": [
+    "articles/aks/intro-aks-automatic.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/intro-aks-automatic"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/cc33dd44",
+   "sha": "cc33dd44"
+  },
+  {
+   "id": "1a2b3c4d-0",
+   "product": "kubernetes-fleet",
+   "date": "2026-06-30",
+   "kind": "new-feature",
+   "title": "Cluster resource placement supports taint-based eviction",
+   "summary": "New capability page for taint-based eviction policies in Fleet cluster resource placement.",
+   "reasons": [
+    "new-file",
+    "toc-entry-added"
+   ],
+   "files": [
+    "articles/kubernetes-fleet/crp-taint-eviction.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/kubernetes-fleet/crp-taint-eviction"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/1a2b3c4d",
+   "sha": "1a2b3c4d"
+  },
+  {
+   "id": "aa11bb22-0",
+   "product": "aks",
+   "date": "2026-07-01",
+   "kind": "preview",
+   "title": "Node auto-repair notifications (preview)",
+   "summary": "New page documenting preview support for node auto-repair event notifications via Azure Event Grid.",
+   "reasons": [
+    "new-file",
+    "keyword:preview"
+   ],
+   "files": [
+    "articles/aks/node-auto-repair-notifications.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/node-auto-repair-notifications"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/aa11bb22",
+   "sha": "aa11bb22"
+  },
+  {
+   "id": "817854da-0",
+   "product": "aks",
+   "date": "2026-07-02",
+   "kind": "doc-update",
+   "title": "Add note on Azure Spot node pools for stateful workloads",
+   "summary": "Guidance added clarifying that Azure Spot node pools are not recommended for stateful workloads due to eviction behavior.",
+   "reasons": [
+    "body-change"
+   ],
+   "files": [
+    "articles/aks/spot-node-pools.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/spot-node-pools"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/817854da",
+   "sha": "817854da"
+  },
+  {
+   "id": "baf56336-0",
+   "product": "aks",
+   "date": "2026-07-02",
+   "kind": "doc-update",
+   "title": "Enhance documentation for AKS private cluster FQDN",
+   "summary": "Expanded explanation of private cluster FQDN resolution options and custom DNS configuration.",
+   "reasons": [
+    "body-change",
+    "table-edit"
+   ],
+   "files": [
+    "articles/aks/private-clusters.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/aks/private-clusters"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/baf56336",
+   "sha": "baf56336"
+  },
+  {
+   "id": "9f8e7d6c-0",
+   "product": "application-network",
+   "date": "2026-06-28",
+   "kind": "doc-update",
+   "title": "Clarify Application Gateway for Containers SSL policy defaults",
+   "summary": "Updated SSL policy documentation to state the new default minimum TLS version.",
+   "reasons": [
+    "body-change"
+   ],
+   "files": [
+    "articles/application-network/ssl-policy.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/application-network/ssl-policy"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/9f8e7d6c",
+   "sha": "9f8e7d6c"
+  }
+ ],
+ "total_records": 6
+}

@@ -1,0 +1,26 @@
+{
+ "product": "kubernetes-fleet",
+ "generated_at": "2026-07-05T03:00:00Z",
+ "records": [
+  {
+   "id": "1a2b3c4d-0",
+   "product": "kubernetes-fleet",
+   "date": "2026-06-30",
+   "kind": "new-feature",
+   "title": "Cluster resource placement supports taint-based eviction",
+   "summary": "New capability page for taint-based eviction policies in Fleet cluster resource placement.",
+   "reasons": [
+    "new-file",
+    "toc-entry-added"
+   ],
+   "files": [
+    "articles/kubernetes-fleet/crp-taint-eviction.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/kubernetes-fleet/crp-taint-eviction"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/1a2b3c4d",
+   "sha": "1a2b3c4d"
+  }
+ ]
+}

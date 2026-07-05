@@ -1,0 +1,25 @@
+{
+ "product": "application-network",
+ "generated_at": "2026-07-05T03:00:00Z",
+ "records": [
+  {
+   "id": "9f8e7d6c-0",
+   "product": "application-network",
+   "date": "2026-06-28",
+   "kind": "doc-update",
+   "title": "Clarify Application Gateway for Containers SSL policy defaults",
+   "summary": "Updated SSL policy documentation to state the new default minimum TLS version.",
+   "reasons": [
+    "body-change"
+   ],
+   "files": [
+    "articles/application-network/ssl-policy.md"
+   ],
+   "doc_urls": [
+    "https://learn.microsoft.com/azure/application-network/ssl-policy"
+   ],
+   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/9f8e7d6c",
+   "sha": "9f8e7d6c"
+  }
+ ]
+}
