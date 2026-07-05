@@ -29,8 +29,14 @@
       </section>
 
       <nav id="filters" class="filters" hidden aria-label="Filters">
-        <div id="product-filters" class="chip-row" role="group" aria-label="Filter by product"></div>
-        <div id="kind-filters" class="chip-row" role="group" aria-label="Filter by kind"></div>
+        <div class="filter-group">
+          <span class="filter-label" aria-hidden="true">Product</span>
+          <div id="product-filters" class="chip-row" role="group" aria-label="Filter by product"></div>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label" aria-hidden="true">Kind</span>
+          <div id="kind-filters" class="chip-row" role="group" aria-label="Filter by kind"></div>
+        </div>
       </nav>
 
       <section id="timeline" aria-label="Change timeline">
