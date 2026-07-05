@@ -46,6 +46,17 @@
     "doc-update": "doc update"
   };
   var SUMMARY_LIMIT = 220;
+  var BOT_AUTHOR_DENYLIST = {
+    "dependabot": true,
+    "dependabot[bot]": true,
+    "github-actions": true,
+    "github-actions[bot]": true,
+    "azure-pipelines": true,
+    "azure-pipelines[bot]": true,
+    "renovate": true,
+    "renovate[bot]": true,
+    "web-flow": true
+  };
 
   var state = {
     records: [],            // merged, newest first
@@ -80,6 +91,65 @@
     a.href = href;
     a.rel = "noopener";
     return a;
+  }
+
+  function cleanAuthorValue(value) {
+    return typeof value === "string" ? value.trim() : "";
+  }
+
+  function isGitHubLogin(value) {
+    return /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/.test(value);
+  }
+
+  function isSuppressedAuthor(value) {
+    value = cleanAuthorValue(value).toLowerCase();
+    return !!value && (/\[bot\]$/.test(value) || BOT_AUTHOR_DENYLIST[value]);
+  }
+
+  function authorForRecord(rec) {
+    var login = cleanAuthorValue(rec.author);
+    var name = cleanAuthorValue(rec.author_name);
+    var value = login || name;
+    if (!value || isSuppressedAuthor(value)) return null;
+    return {
+      text: value,
+      login: login && isGitHubLogin(login) ? login : ""
+    };
+  }
+
+  function batchAuthors(records) {
+    var seen = {};
+    var authors = [];
+    records.forEach(function (rec) {
+      var author = authorForRecord(rec);
+      var key;
+      if (!author) return;
+      key = author.text.toLowerCase();
+      if (seen[key] !== undefined) {
+        if (!authors[seen[key]].login && author.login) authors[seen[key]] = author;
+        return;
+      }
+      seen[key] = authors.length;
+      authors.push(author);
+    });
+    return authors;
+  }
+
+  function appendAuthors(container, authors) {
+    var shown = authors.slice(0, 2);
+    shown.forEach(function (author, index) {
+      if (index > 0) container.appendChild(document.createTextNode(", "));
+      if (author.login) {
+        container.appendChild(link("https://github.com/" + author.login,
+          "@" + author.text, "author"));
+      } else {
+        container.appendChild(el("span", "author", author.text));
+      }
+    });
+    if (authors.length > shown.length) {
+      container.appendChild(document.createTextNode(" "));
+      container.appendChild(el("span", "author-overflow", "+" + (authors.length - shown.length)));
+    }
   }
 
   function badgeFor(kind) {
@@ -761,6 +831,13 @@
       tag.title = reason;
       meta.appendChild(tag);
     });
+    var authors = batchAuthors(batch.records);
+    if (authors.length) {
+      var authorSegment = el("span", "authors");
+      meta.appendChild(el("span", "sep", "·"));
+      appendAuthors(authorSegment, authors);
+      meta.appendChild(authorSegment);
+    }
     card.appendChild(meta);
     return card;
   }

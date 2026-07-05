@@ -62,6 +62,8 @@ Newest-first, capped at 200 records. Older history stays in SQLite only.
   "change_summary": "Azure Spot node pool guidance now covers stateful workload considerations.",
   "page_change_category": "new-page",
   "batch_key": "new-page:aks:azure-spot-node-pool-guidance-now-covers-stateful-workload-considerations",
+  "author": "octocat",
+  "author_name": "Mona Lisa",
   "reasons": ["keyword:preview", "new-file"],
   "files": ["articles/aks/spot-node-pools.md"],
   "doc_urls": ["https://learn.microsoft.com/azure/aks/spot-node-pools"],
@@ -83,6 +85,18 @@ Field rules:
   feeds may omit it; the website derives the category from `files` and `reasons`.
 - `batch_key`: stable grouping hint for collapsing related records into one
   dashboard card. Older feeds may omit it; the website derives a fallback key.
+  Author fields do not affect batching identity; batch author display is
+  aggregated client-side from grouped records.
+- `author`: optional GitHub login for the commit author. It may be absent or
+  empty on legacy records, unlinked emails, or older feeds. When present it is
+  expected to match GitHub's login pattern (`[A-Za-z0-9-]`, max 39 characters,
+  no leading/trailing hyphen), but consumers must validate before linking to a
+  GitHub profile and render plain text otherwise.
+- `author_name`: optional raw git author display name fallback. It may also be
+  absent or empty, is display-only, and consumers must not build profile links
+  from it.
+- Bot/service authors may still be present in feeds for auditability, but the
+  website suppresses them in the card author metadata.
 - `reasons`: rule-triage reason codes (free-form kebab strings, shown as small tags).
 - `doc_urls`: derived from files via product `learn_base` (strip `.md`); may be empty.
 - All string fields are plain text — the website must escape them when rendering
@@ -118,7 +132,8 @@ Ranking weight for `top_changes`: breaking-change > deprecation > ga > new-featu
 
 - Website: fetch feeds with **relative** paths (`data/summary.json`) — the site is
   served under `https://<user>.github.io/LearnPulse/`. No frameworks, no CDN, no
-  build step, no external requests of any kind.
+  build step, no external requests of any kind. Author UI is text-only: profile
+  links are allowed after validation, but no avatars or other external requests.
 - Pipeline: Python 3.11+, stdlib + `pyyaml` only. Anthropic API called via urllib
   when `ANTHROPIC_API_KEY` is set; graceful heuristic fallback when not.
 - Feeds must always be valid JSON and match this schema even when empty
