@@ -54,6 +54,12 @@ python3 -m http.server 8000 -d docs                      # then open localhost:8
 Set `GITHUB_TOKEN` for higher API rate limits and `ANTHROPIC_API_KEY` for LLM
 summaries.
 
+## Testing
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
 ## Adding a product
 
 Add an entry to [products.yml](products.yml) — any `(repo, path)` pair in a
