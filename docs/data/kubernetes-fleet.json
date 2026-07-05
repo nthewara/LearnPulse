@@ -1,6 +1,6 @@
 {
   "product": "kubernetes-fleet",
-  "generated_at": "2026-07-05T00:36:46Z",
+  "generated_at": "2026-07-05T03:07:06Z",
   "records": [
     {
       "id": "55176997-0",
@@ -8,7 +8,10 @@
       "date": "2026-06-18",
       "kind": "doc-update",
       "title": "Revert memberSelector-based update strategy docs from PR #3036",
-      "summary": "Revert memberSelector-based update strategy docs from PR #3036. Notable addition: \"* **Update Strategy**: describes a reusable update sequence consisting of stages and groups of clusters. A cluster appears in a group in a stage based on the update group it's assigned. For further in\"",
+      "summary": "Update Strategy: describes a reusable update sequence consisting of stages and groups of clusters. A cluster appears in a group in a stage based on the update group it's assigned. For further information, see understandi. Update Group: Each Update Stage contains one or more Update Groups, which select clusters to update. Assign member clusters to Update Groups by using the Update Group property of the cluster. Update Groups in an Update S.",
+      "change_summary": "Update Strategy: describes a reusable update sequence consisting of stages and groups of clusters. A cluster appears in a group in a stage based on the update group it's assigned. For further information, see understandi. Update Group: Each Update Stage contains one or more Update Groups, which select clusters to update. Assign member clusters to Update Groups by using the Update Group property of the cluster. Update Groups in an Update S.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:kubernetes-fleet:update-strategy-describes-a-reusable-update-sequence-consisting-of-stages-and-gr",
       "reasons": [
         "doc-update"
       ],

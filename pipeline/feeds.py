@@ -13,8 +13,10 @@ from datetime import datetime, timedelta, timezone
 
 try:
     import db
+    import summarize
 except ImportError:  # pragma: no cover
     from pipeline import db
+    from pipeline import summarize
 
 FEED_CAP = 200
 WINDOW_DAYS = 7
@@ -60,6 +62,13 @@ def page_change_category(files, reasons) -> str:
     return "existing-page"
 
 
+def _batch_key(category: str, product: str, summary: str, title: str) -> str:
+    base = summary or title or "documentation update"
+    normalized = "".join(ch.lower() if ch.isalnum() else "-" for ch in base)
+    normalized = "-".join(part for part in normalized.split("-") if part)
+    return f"{category}:{product}:{normalized[:80]}"
+
+
 def _raw_patch_files(row) -> list:
     try:
         patch_summary = json.loads(row["raw_patch_summary"] or "{}")
@@ -72,14 +81,18 @@ def _record_to_json(row) -> dict:
     reasons = json.loads(row["reasons_json"] or "[]")
     files = json.loads(row["files_json"] or "[]")
     category_files = _raw_patch_files(row) or files
+    category = page_change_category(category_files, reasons)
+    change_summary = summarize.doc_change_summary(row)
     return {
         "id": row["id"],
         "product": row["product"],
         "date": row["date"],
         "kind": row["kind"] or "doc-update",
         "title": row["title"] or "",
-        "summary": row["summary"] or "",
-        "page_change_category": page_change_category(category_files, reasons),
+        "summary": change_summary or row["summary"] or "",
+        "change_summary": change_summary or row["summary"] or "",
+        "page_change_category": category,
+        "batch_key": _batch_key(category, row["product"], change_summary, row["title"] or ""),
         "reasons": reasons,
         "files": files,
         "doc_urls": json.loads(row["doc_urls_json"] or "[]"),

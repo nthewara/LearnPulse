@@ -21,6 +21,14 @@
     { id: "existing-page", label: "Changes to existing pages" },
     { id: "new-page", label: "New pages added" }
   ];
+  var KIND_WEIGHT = {
+    "breaking-change": 5,
+    "deprecation": 4,
+    "ga": 3,
+    "new-feature": 2,
+    "preview": 1,
+    "doc-update": 0
+  };
 
   var state = {
     records: [],            // merged, newest first
@@ -142,7 +150,24 @@
 
   function cleanSummaryText(text) {
     text = (text || "").trim();
-    text = text.replace(/^Notable addition:\s*/i, "Added detail: ");
+    if (/applies\s+to/i.test(text)) {
+      var applies = [];
+      ["AKS Automatic", "AKS Standard"].forEach(function (label) {
+        if (text.toLowerCase().indexOf(label.toLowerCase()) !== -1) applies.push(label);
+      });
+      if (applies.length) {
+        return "Applies-to matrix now includes " +
+          (applies.length === 1 ? applies[0] : applies.slice(0, -1).join(", ") + " and " + applies[applies.length - 1]) +
+          ".";
+      }
+    }
+    text = text.replace(/^Notable addition:\s*/i, "");
+    text = text.replace(/\[[^\]]+\]\([^)]+\)/g, function (match) {
+      return match.replace(/^\[|\]\([^)]+\)$/g, "");
+    });
+    text = text.replace(/:[a-z0-9_+-]+:/gi, " ");
+    text = text.replace(/[*_`]+/g, "");
+    text = text.replace(/\s+/g, " ").trim();
     if (text && !/[.!?]"?$/.test(text)) text += ".";
     return text;
   }
@@ -184,7 +209,7 @@
   }
 
   function summaryForRecord(rec) {
-    var summary = (rec.summary || "").trim();
+    var summary = (rec.change_summary || rec.summary || "").trim();
     var title = (rec.title || "").trim();
     if (summary) {
       var stripped = stripTitlePrefix(summary, title);
@@ -196,6 +221,88 @@
       }
     }
     return derivedSummary(rec);
+  }
+
+  function bestKind(records) {
+    return records.reduce(function (best, rec) {
+      return (KIND_WEIGHT[rec.kind] || 0) > (KIND_WEIGHT[best] || 0) ? rec.kind : best;
+    }, "doc-update");
+  }
+
+  function firstUrl(records) {
+    for (var i = 0; i < records.length; i += 1) {
+      var url = recordUrl(records[i]);
+      if (url && url !== "#") return url;
+    }
+    return "#";
+  }
+
+  function pageEntries(records) {
+    var seen = {};
+    var entries = [];
+    records.forEach(function (rec) {
+      var names = pageNames(rec);
+      var urls = rec.doc_urls || [];
+      names.forEach(function (name, i) {
+        var key = name.toLowerCase();
+        if (seen[key]) return;
+        seen[key] = true;
+        entries.push({ name: name, url: urls[i] || urls[0] || recordUrl(rec) });
+      });
+    });
+    return entries;
+  }
+
+  function batchKey(rec) {
+    return [
+      pageChangeCategory(rec),
+      rec.date || "",
+      rec.product || "",
+      rec.batch_key || normalizeText(summaryForRecord(rec) || rec.title || "")
+    ].join("|");
+  }
+
+  function batchRecords(records) {
+    var batches = [];
+    var byKey = {};
+    records.forEach(function (rec) {
+      var key = batchKey(rec);
+      if (!byKey[key]) {
+        byKey[key] = {
+          key: key,
+          category: pageChangeCategory(rec),
+          date: rec.date,
+          product: rec.product,
+          summary: summaryForRecord(rec),
+          records: []
+        };
+        batches.push(byKey[key]);
+      }
+      byKey[key].records.push(rec);
+    });
+    batches.forEach(function (batch) {
+      batch.kind = bestKind(batch.records);
+      batch.pages = pageEntries(batch.records);
+    });
+    return batches;
+  }
+
+  function countLabel(batch) {
+    var changes = batch.records.length;
+    var pages = batch.pages.length;
+    if (changes === 1 && pages <= 1) return "1 change";
+    if (pages > 1) return changes + " changes across " + pages + " pages";
+    return changes + " changes";
+  }
+
+  function appendPageLinks(container, pages) {
+    pages.slice(0, 4).forEach(function (page, index) {
+      if (index > 0) container.appendChild(document.createTextNode(", "));
+      container.appendChild(link(page.url || "#", page.name));
+    });
+    if (pages.length > 4) {
+      container.appendChild(document.createTextNode(" and " + (pages.length - 4) + " more"));
+    }
   }
 
   // ---------- rendering ----------
@@ -288,25 +395,35 @@
     });
   }
 
-  function renderRecord(rec) {
-    var card = el("article", "record");
+  function renderBatch(batch) {
+    var card = el("article", "record batch-record");
 
     var head = el("div", "head");
-    head.appendChild(badgeFor(rec.kind));
-    head.appendChild(link(recordUrl(rec), rec.title || "(untitled)"));
+    head.appendChild(badgeFor(batch.kind));
+    head.appendChild(link(firstUrl(batch.records), batch.summary || "Documentation change"));
+    head.appendChild(el("span", "count-pill", countLabel(batch)));
     card.appendChild(head);
 
-    card.appendChild(el("p", "summary-text", summaryForRecord(rec)));
+    if (batch.pages.length) {
+      var pages = el("p", "summary-text page-list");
+      pages.appendChild(document.createTextNode(
+        pageChangeCategory(batch.records[0]) === "new-page" ? "New page: " : "Affected pages: "
+      ));
+      appendPageLinks(pages, batch.pages);
+      card.appendChild(pages);
+    }
 
     var meta = el("div", "meta");
-    meta.appendChild(el("span", null, state.productNames[rec.product] || rec.product));
+    meta.appendChild(el("span", null, state.productNames[batch.product] || batch.product));
     meta.appendChild(el("span", "sep", "·"));
-    meta.appendChild(el("span", null, formatDate(rec.date)));
-    if (rec.commit_url) {
-      meta.appendChild(el("span", "sep", "·"));
-      meta.appendChild(link(rec.commit_url, "commit ↗"));
-    }
-    (rec.reasons || []).forEach(function (reason) {
+    meta.appendChild(el("span", null, formatDate(batch.date)));
+    meta.appendChild(el("span", "sep", "·"));
+    meta.appendChild(el("span", null, batch.records.length === 1 ? "1 commit" : batch.records.length + " commits"));
+    var reasons = {};
+    batch.records.forEach(function (rec) {
+      (rec.reasons || []).forEach(function (reason) { reasons[reason] = true; });
+    });
+    Object.keys(reasons).slice(0, 4).forEach(function (reason) {
       meta.appendChild(el("span", "tag", reason));
     });
     card.appendChild(meta);
@@ -331,27 +448,28 @@
     statusEl.hidden = true;
 
     var shown = records.slice(0, state.limit);
+    var batches = batchRecords(shown);
     var grouped = {};
     PAGE_CATEGORIES.forEach(function (category) {
       grouped[category.id] = [];
     });
-    shown.forEach(function (rec) {
-      grouped[pageChangeCategory(rec)].push(rec);
+    batches.forEach(function (batch) {
+      grouped[batch.category].push(batch);
     });
 
     var frag = document.createDocumentFragment();
     PAGE_CATEGORIES.forEach(function (category) {
-      var categoryRecords = grouped[category.id];
-      if (!categoryRecords.length) return;
+      var categoryBatches = grouped[category.id];
+      if (!categoryBatches.length) return;
       var section = el("section", "category-section");
       section.appendChild(el("h2", "category-heading", category.label));
       var currentDate = null;
-      categoryRecords.forEach(function (rec) {
-        if (rec.date !== currentDate) {
-          currentDate = rec.date;
-          section.appendChild(el("h3", "date-heading", formatDate(rec.date)));
+      categoryBatches.forEach(function (batch) {
+        if (batch.date !== currentDate) {
+          currentDate = batch.date;
+          section.appendChild(el("h3", "date-heading", formatDate(batch.date)));
         }
-        section.appendChild(renderRecord(rec));
+        section.appendChild(renderBatch(batch));
       });
       frag.appendChild(section);
     });
