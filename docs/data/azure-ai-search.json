@@ -1,7 +1,123 @@
 {
   "product": "azure-ai-search",
-  "generated_at": "2026-07-05T03:33:30Z",
+  "generated_at": "2026-07-05T06:34:39Z",
   "records": [
+    {
+      "id": "8ac646cd-0",
+      "product": "azure-ai-search",
+      "date": "2026-06-24",
+      "kind": "doc-update",
+      "title": "docs(search): add missing RBAC enable step in knowledge base Configure access section",
+      "summary": "1. Enable role-based access control on Azure AI Search.",
+      "change_summary": "1. Enable role-based access control on Azure AI Search.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:azure-ai-search:1-enable-role-based-access-control-on-azure-ai-search",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/search/agentic-retrieval-how-to-create-knowledge-base.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/search/agentic-retrieval-how-to-create-knowledge-base"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/8ac646cda0a79699724f645d9ef219849b296416",
+      "sha": "8ac646cd"
+    },
+    {
+      "id": "c32ff85c-0",
+      "product": "azure-ai-search",
+      "date": "2026-06-05",
+      "kind": "doc-update",
+      "title": "Tweak wording",
+      "summary": "The listed fileName is taken from the Content-Disposition: attachment; filename=\"...\" header on the upload request. REST calls and the.NET SDK set this header directly, while the Python SDK accepts a filename parameter.",
+      "change_summary": "The listed fileName is taken from the Content-Disposition: attachment; filename=\"...\" header on the upload request. REST calls and the.NET SDK set this header directly, while the Python SDK accepts a filename parameter.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:azure-ai-search:the-listed-filename-is-taken-from-the-content-disposition-attachment-filename-he",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/search/agentic-knowledge-source-how-to-file.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/search/agentic-knowledge-source-how-to-file"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/c32ff85cda8ec19f7a1934487e9b301c305edfb9",
+      "sha": "c32ff85c"
+    },
+    {
+      "id": "f895e20a-0",
+      "product": "azure-ai-search",
+      "date": "2026-06-05",
+      "kind": "preview",
+      "title": "Merge pull request #12676 from haileytap/security",
+      "summary": "When you create this knowledge source with contentExtractionMode set to standard, you might get the following error. To resolve the error, define the default values as instructed in the Content Understanding prerequisites. Afterwards, you can proceed with creating the knowledge source.",
+      "change_summary": "When you create this knowledge source with contentExtractionMode set to standard, you might get the following error. To resolve the error, define the default values as instructed in the Content Understanding prerequisites. Afterwards, you can proceed with creating the knowledge source.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:azure-ai-search:when-you-create-this-knowledge-source-with-contentextractionmode-set-to-standard",
+      "reasons": [
+        "keyword:preview"
+      ],
+      "files": [
+        "articles/search/agentic-knowledge-source-how-to-blob.md",
+        "articles/search/agentic-knowledge-source-how-to-file.md",
+        "articles/search/agentic-knowledge-source-how-to-onelake.md",
+        "articles/search/agentic-knowledge-source-how-to-sharepoint-indexed.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/search/agentic-knowledge-source-how-to-blob",
+        "https://learn.microsoft.com/azure/search/agentic-knowledge-source-how-to-file",
+        "https://learn.microsoft.com/azure/search/agentic-knowledge-source-how-to-onelake",
+        "https://learn.microsoft.com/azure/search/agentic-knowledge-source-how-to-sharepoint-indexed"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/f895e20ae4a36883252b20a7854e325f051e3eef",
+      "sha": "f895e20a"
+    },
+    {
+      "id": "6f5278cb-0",
+      "product": "azure-ai-search",
+      "date": "2026-06-05",
+      "kind": "preview",
+      "title": "Fix errors",
+      "summary": "Reference: Knowledge Sources - Upload File. A response includes metadata for each uploaded file. The errorMessage value is null when the upload is processed without an error.",
+      "change_summary": "Reference: Knowledge Sources - Upload File. A response includes metadata for each uploaded file. The errorMessage value is null when the upload is processed without an error.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:azure-ai-search:reference-knowledge-sources-upload-file-a-response-includes-metadata-for-each-up",
+      "reasons": [
+        "keyword:preview"
+      ],
+      "files": [
+        "articles/search/agentic-knowledge-source-how-to-file.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/search/agentic-knowledge-source-how-to-file"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/6f5278cb8941b798ac05923583de203d738a45e4",
+      "sha": "6f5278cb"
+    },
+    {
+      "id": "a991fae8-0",
+      "product": "azure-ai-search",
+      "date": "2026-06-05",
+      "kind": "doc-update",
+      "title": "Update regional support for QR",
+      "summary": "ai-usage: ai-assisted. Updated documentation table.",
+      "change_summary": "ai-usage: ai-assisted. Updated documentation table.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:azure-ai-search:ai-usage-ai-assisted-updated-documentation-table",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/search/search-region-support.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/search/search-region-support"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/a991fae827f436ea0faa0fe8d46f46619642426a",
+      "sha": "a991fae8"
+    },
     {
       "id": "ba1223c0-0",
       "product": "azure-ai-search",

@@ -1,7 +1,53 @@
 {
   "product": "foundry-agents",
-  "generated_at": "2026-07-05T03:33:30Z",
+  "generated_at": "2026-07-05T06:34:39Z",
   "records": [
+    {
+      "id": "ccbea5b2-0",
+      "product": "foundry-agents",
+      "date": "2026-07-02",
+      "kind": "preview",
+      "title": "add document and steps for stop session.",
+      "summary": "Stopping a session terminates its running compute while preserving the persistent filesystem volume. Unlike deleting a session, the session is retained and can be resumed by a later invocation. Stopping a session that's already stopped succeeds without error.",
+      "change_summary": "Stopping a session terminates its running compute while preserving the persistent filesystem volume. Unlike deleting a session, the session is retained and can be resumed by a later invocation. Stopping a session that's already stopped succeeds without error.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:foundry-agents:stopping-a-session-terminates-its-running-compute-while-preserving-the-persisten",
+      "reasons": [
+        "keyword:preview"
+      ],
+      "files": [
+        "articles/foundry/agents/how-to/manage-hosted-sessions.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/foundry/agents/how-to/manage-hosted-sessions"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/ccbea5b24d19c554e07bae72fbaafedf9733b43e",
+      "sha": "ccbea5b2"
+    },
+    {
+      "id": "e09ef342-0",
+      "product": "foundry-agents",
+      "date": "2026-06-15",
+      "kind": "doc-update",
+      "title": "Add requirement for ACRs enabling azureADAuthenticationAsArmPolicy for Foundry Hosted Agent image ac",
+      "summary": "Updated documentation table.",
+      "change_summary": "Updated documentation table.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:foundry-agents:updated-documentation-table",
+      "reasons": [
+        "table-edit"
+      ],
+      "files": [
+        "articles/foundry/agents/concepts/hosted-agent-permissions.md",
+        "articles/foundry/agents/how-to/deploy-hosted-agent.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agent-permissions",
+        "https://learn.microsoft.com/azure/foundry/agents/how-to/deploy-hosted-agent"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/e09ef342e80fbb2b2995981485549b5052456c5a",
+      "sha": "e09ef342"
+    },
     {
       "id": "66e14b4a-0",
       "product": "foundry-agents",
