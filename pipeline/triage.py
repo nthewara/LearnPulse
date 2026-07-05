@@ -5,13 +5,14 @@ to signal candidates. One ChangeRecord per commit per product.
 """
 from __future__ import annotations
 
-import json
 import re
 
 try:
     import db
+    import derived
 except ImportError:  # pragma: no cover
     from pipeline import db
+    from pipeline import derived
 
 KINDS = ("new-feature", "ga", "preview", "deprecation", "breaking-change", "doc-update")
 
@@ -78,10 +79,7 @@ def doc_url_for(filename: str, product: dict) -> str | None:
 def classify(record, product: dict) -> dict:
     """Classify one raw record. Returns dict of triage fields."""
     message = record["raw_commit_message"] or ""
-    try:
-        patch_summary = json.loads(record["raw_patch_summary"] or "{}")
-    except json.JSONDecodeError:
-        patch_summary = {}
+    patch_summary = derived.patch_payload(record.get("patch_excerpt"))
     files = patch_summary.get("files") or []
     total_files = patch_summary.get("total_files_in_commit", len(files))
 
@@ -222,9 +220,9 @@ def run(products=None) -> dict:
             conn, row["id"],
             kind=result["kind"],
             title=result["title"],
-            reasons_json=json.dumps(result["reasons"]),
-            files_json=json.dumps(result["files"]),
-            doc_urls_json=json.dumps(result["doc_urls"]),
+            reasons=result["reasons"],
+            files=result["files"],
+            doc_urls=result["doc_urls"],
             is_noise=result["is_noise"],
         )
         counters["triaged"] += 1

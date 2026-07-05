@@ -8,7 +8,10 @@ Both sides must conform to this file. If you change it, change both sides.
 ```
 products.yml                 # watchlist config (repo, path) pairs — see file
 pipeline/                    # Python pipeline (stdlib + pyyaml only)
-data/learnpulse.db           # SQLite system of record (committed)
+data/
+  records/
+    <product-id>.json        # deterministic JSON system of record
+  state.json                 # cursors and seen-commit dedupe state
 docs/                        # GitHub Pages root (served at /LearnPulse/)
   index.html  style.css  app.js
   data/                      # JSON feeds the site fetches (relative paths!)
@@ -39,7 +42,8 @@ digests/                     # weekly digest markdown, e.g. 2026-W27.md
 
 ## docs/data/<product-id>.json — per-product feed
 
-Newest-first, capped at 200 records. Older history stays in SQLite only.
+Newest-first, capped at 200 records. Older history stays in the JSON record
+store only.
 
 ```json
 {
@@ -136,5 +140,8 @@ Ranking weight for `top_changes`: breaking-change > deprecation > ga > new-featu
   links are allowed after validation, but no avatars or other external requests.
 - Pipeline: Python 3.11+, stdlib + `pyyaml` only. Anthropic API called via urllib
   when `ANTHROPIC_API_KEY` is set; graceful heuristic fallback when not.
+- Store: committed `data/records/<product-id>.json` and `data/state.json` are
+  deterministic, line-reviewable JSON; feed schema under `docs/data/` is
+  unchanged by the storage backend.
 - Feeds must always be valid JSON and match this schema even when empty
   (`records: []`).

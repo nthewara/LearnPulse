@@ -25,7 +25,7 @@ AZURE_OPENAI_PRODUCT = {
 def record(message, files):
     return {
         "raw_commit_message": message,
-        "raw_patch_summary": json.dumps({"total_files_in_commit": len(files), "files": files}),
+        "patch_excerpt": json.dumps({"total_files_in_commit": len(files), "files": files}),
     }
 
 

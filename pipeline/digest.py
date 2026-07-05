@@ -5,8 +5,8 @@ non-noise records dated within that week, grouped by product.
 """
 from __future__ import annotations
 
-import json
 import os
+import re
 from datetime import date, datetime, timezone
 
 try:
@@ -49,6 +49,27 @@ def _author_credit(row) -> str:
     return _optional_row_text(row, "author_name") or ""
 
 
+def _digest_without_generated_at(content: str) -> str:
+    return re.sub(
+        r"\(generated \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\)",
+        "(generated <ignored>)",
+        content,
+    )
+
+
+def _write_digest_if_changed(path: str, content: str) -> bool:
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            existing = fh.read()
+    except FileNotFoundError:
+        existing = None
+    if existing is not None and _digest_without_generated_at(existing) == _digest_without_generated_at(content):
+        return False
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(content)
+    return True
+
+
 def run() -> dict:
     conn = db.connect()
     products = db.load_products()
@@ -75,7 +96,7 @@ def run() -> dict:
         lines.append("")
         for r in rows:
             emoji = KIND_EMOJI.get(r["kind"], "📝")
-            doc_urls = json.loads(r["doc_urls_json"] or "[]")
+            doc_urls = r.get("doc_urls") or []
             links = [f"[commit]({r['commit_url']})"]
             if doc_urls:
                 links.insert(0, f"[doc]({doc_urls[0]})")
@@ -91,12 +112,12 @@ def run() -> dict:
         lines.append("")
 
     os.makedirs(db.DIGESTS_DIR, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as fh:
-        fh.write("\n".join(lines))
+    wrote = _write_digest_if_changed(path, "\n".join(lines))
 
     conn.close()
-    print(f"[digest] wrote {os.path.relpath(path, db.ROOT)} with {total} records")
-    return {"file": path, "records": total}
+    action = "wrote" if wrote else "unchanged"
+    print(f"[digest] {action} {os.path.relpath(path, db.ROOT)} with {total} records")
+    return {"file": path, "records": total, "written": wrote}
 
 
 if __name__ == "__main__":

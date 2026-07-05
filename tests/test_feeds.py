@@ -1,4 +1,3 @@
-import json
 import sys
 import unittest
 from pathlib import Path
@@ -43,28 +42,22 @@ class FeedCategoryTests(unittest.TestCase):
             "new-page",
         )
 
-    def test_record_json_includes_category_from_raw_patch_status(self):
+    def test_record_json_uses_persisted_display_fields(self):
         row = {
             "id": "abc12345-0",
             "product": "aks",
             "date": "2026-07-05",
             "kind": "new-feature",
             "title": "Add widget autoscaling",
-            "summary": "",
-            "reasons_json": json.dumps(["new-file"]),
-            "files_json": json.dumps(["articles/aks/widget-autoscaling.md"]),
-            "doc_urls_json": json.dumps(["https://learn.microsoft.com/azure/aks/widget-autoscaling"]),
+            "summary": "LLM summary not used by dashboard.",
+            "change_summary": "Widget autoscaling is now in preview for AKS clusters.",
+            "page_change_category": "new-page",
+            "batch_key": "new-page:aks:widget-autoscaling-is-now-in-preview",
+            "reasons": ["new-file"],
+            "files": ["articles/aks/widget-autoscaling.md"],
+            "doc_urls": ["https://learn.microsoft.com/azure/aks/widget-autoscaling"],
             "commit_url": "https://github.com/example/repo/commit/abc12345",
             "sha": "abc123456789",
-            "raw_patch_summary": json.dumps({
-                "files": [
-                    {
-                        "filename": "articles/aks/widget-autoscaling.md",
-                        "status": "added",
-                        "patch": "+Widget autoscaling is now in preview for AKS clusters.",
-                    },
-                ],
-            }),
         }
 
         record = feeds._record_to_json(row)
@@ -73,7 +66,8 @@ class FeedCategoryTests(unittest.TestCase):
             record["change_summary"],
             "Widget autoscaling is now in preview for AKS clusters.",
         )
-        self.assertTrue(record["batch_key"].startswith("new-page:aks:widget-autoscaling"))
+        self.assertEqual(record["summary"], record["change_summary"])
+        self.assertEqual(record["batch_key"], "new-page:aks:widget-autoscaling-is-now-in-preview")
 
     def test_azure_ai_record_json_keeps_product_and_doc_url(self):
         row = {
@@ -83,20 +77,14 @@ class FeedCategoryTests(unittest.TestCase):
             "kind": "doc-update",
             "title": "Update indexing guide",
             "summary": "Updated indexing guidance.",
-            "reasons_json": json.dumps(["doc-update"]),
-            "files_json": json.dumps(["articles/search/search-how-to-index.md"]),
-            "doc_urls_json": json.dumps(["https://learn.microsoft.com/azure/search/search-how-to-index"]),
+            "change_summary": "Updated indexing guidance.",
+            "page_change_category": "existing-page",
+            "batch_key": "existing-page:azure-ai-search:updated-indexing-guidance",
+            "reasons": ["doc-update"],
+            "files": ["articles/search/search-how-to-index.md"],
+            "doc_urls": ["https://learn.microsoft.com/azure/search/search-how-to-index"],
             "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/def45678",
             "sha": "def456789abc",
-            "raw_patch_summary": json.dumps({
-                "files": [
-                    {
-                        "filename": "articles/search/search-how-to-index.md",
-                        "status": "modified",
-                        "patch": "+Use the latest Azure AI Search indexing options.",
-                    },
-                ],
-            }),
         }
 
         record = feeds._record_to_json(row)
@@ -128,20 +116,14 @@ class FeedCategoryTests(unittest.TestCase):
             "kind": "doc-update",
             "title": "Update widget guidance",
             "summary": "Updated widget guidance.",
-            "reasons_json": json.dumps(["doc-update"]),
-            "files_json": json.dumps(["articles/aks/widget-autoscaling.md"]),
-            "doc_urls_json": json.dumps([]),
+            "change_summary": "Updated widget guidance.",
+            "page_change_category": "existing-page",
+            "batch_key": "existing-page:aks:updated-widget-guidance",
+            "reasons": ["doc-update"],
+            "files": ["articles/aks/widget-autoscaling.md"],
+            "doc_urls": [],
             "commit_url": "https://github.com/example/repo/commit/abc12345",
             "sha": "abc123456789",
-            "raw_patch_summary": json.dumps({
-                "files": [
-                    {
-                        "filename": "articles/aks/widget-autoscaling.md",
-                        "status": "modified",
-                        "patch": "+Widget guidance now includes rollout notes.",
-                    },
-                ],
-            }),
             "author_login": author_login,
             "author_name": author_name,
         }

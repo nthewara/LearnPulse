@@ -1,4 +1,4 @@
-"""Ingest stage: pull path-scoped commits from GitHub into SQLite.
+"""Ingest stage: pull path-scoped commits from GitHub into the JSON store.
 
 For each product in products.yml:
   GET /repos/{repo}/commits?path={path}&since={cursor}&per_page=100  (paginated)
@@ -21,13 +21,13 @@ from datetime import datetime, timedelta, timezone
 
 try:
     import db
+    import derived
 except ImportError:  # pragma: no cover - package-style invocation
     from pipeline import db
+    from pipeline import derived
 
 API = "https://api.github.com"
 USER_AGENT = "LearnPulse-pipeline (+https://github.com/nthewara/LearnPulse)"
-PATCH_CAP_PER_FILE = 4000  # chars of patch stored per file
-
 # Sync/merge automation commits: duplicates of content that arrives via other
 # commits — skip the expensive detail fetch entirely.
 MERGE_SKIP_RES = [
@@ -123,8 +123,8 @@ def fetch_commit_detail(repo: str, sha: str) -> dict | None:
     return _detail_cache[key]
 
 
-def build_patch_summary(detail: dict, path_prefix: str) -> tuple[str, list[str]]:
-    """Return (raw_patch_summary JSON string, product-path file list)."""
+def build_patch_excerpt(detail: dict, path_prefix: str) -> tuple[str, list[str]]:
+    """Return (capped patch excerpt JSON string, product-path file list)."""
     all_files = detail.get("files") or []
     prefix = path_prefix.rstrip("/") + "/"
     files_out = []
@@ -141,13 +141,13 @@ def build_patch_summary(detail: dict, path_prefix: str) -> tuple[str, list[str]]
             "status": f.get("status"),
             "additions": f.get("additions", 0),
             "deletions": f.get("deletions", 0),
-            "patch": (f.get("patch") or "")[:PATCH_CAP_PER_FILE],
+            "patch": f.get("patch") or "",
         })
     summary = {
         "total_files_in_commit": len(all_files),
         "files": files_out,
     }
-    return json.dumps(summary, ensure_ascii=False), product_files
+    return derived.cap_patch_excerpt(summary), product_files
 
 
 def _clean_author_value(value) -> str | None:
@@ -238,7 +238,7 @@ def ingest_product(conn, product: dict, since_days: int | None,
             detail_budget -= 1
         counters["detail_fetched"] += 1
 
-        raw_patch_summary, product_files = build_patch_summary(detail, path)
+        patch_excerpt, product_files = build_patch_excerpt(detail, path)
         author_login, author_name = commit_author_fields(detail, c)
         record_id = db.next_record_id(conn, sha)
         db.insert_raw_record(
@@ -250,7 +250,7 @@ def ingest_product(conn, product: dict, since_days: int | None,
             sha=sha,
             created_at=_now_iso(),
             raw_commit_message=message,
-            raw_patch_summary=raw_patch_summary,
+            patch_excerpt=patch_excerpt,
             author_login=author_login,
             author_name=author_name,
         )
