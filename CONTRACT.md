@@ -13,7 +13,7 @@ docs/                        # GitHub Pages root (served at /LearnPulse/)
   index.html  style.css  app.js
   data/                      # JSON feeds the site fetches (relative paths!)
     products.json
-    <product-id>.json        # one per product: aks, kubernetes-fleet, application-network
+    <product-id>.json        # one per product configured in products.yml
     summary.json
 digests/                     # weekly digest markdown, e.g. 2026-W27.md
 .github/workflows/pipeline.yml
@@ -27,7 +27,12 @@ digests/                     # weekly digest markdown, e.g. 2026-W27.md
   "products": [
     {"id": "aks", "name": "Azure Kubernetes Service"},
     {"id": "kubernetes-fleet", "name": "Azure Kubernetes Fleet Manager"},
-    {"id": "application-network", "name": "AKS Application Networking"}
+    {"id": "application-network", "name": "AKS Application Networking"},
+    {"id": "azure-openai", "name": "Azure OpenAI Service"},
+    {"id": "foundry-agents", "name": "Foundry Agent Service"},
+    {"id": "azure-ai-search", "name": "Azure AI Search"},
+    {"id": "document-intelligence", "name": "Azure AI Document Intelligence"},
+    {"id": "foundry-local", "name": "Foundry Local"}
   ]
 }
 ```
@@ -90,7 +95,7 @@ Field rules:
   "generated_at": "2026-07-05T03:00:00Z",
   "window_days": 7,
   "counts_by_kind": {"new-feature": 2, "ga": 1, "preview": 4, "deprecation": 0, "breaking-change": 0, "doc-update": 11},
-  "counts_by_product": {"aks": 15, "kubernetes-fleet": 2, "application-network": 1},
+  "counts_by_product": {"aks": 15, "kubernetes-fleet": 2, "application-network": 1, "azure-openai": 3},
   "top_changes": [ /* up to 8 full ChangeRecord objects from the window, ranked */ ],
   "total_records": 18
 }

@@ -18,3 +18,28 @@ products:
     repo: MicrosoftDocs/azure-aks-docs
     path: articles/application-network
     learn_base: https://learn.microsoft.com/azure/application-network/
+  - id: azure-openai
+    name: Azure OpenAI Service
+    repo: MicrosoftDocs/azure-ai-docs
+    path: articles/foundry/openai
+    learn_base: https://learn.microsoft.com/azure/foundry/openai/
+  - id: foundry-agents
+    name: Foundry Agent Service
+    repo: MicrosoftDocs/azure-ai-docs
+    path: articles/foundry/agents
+    learn_base: https://learn.microsoft.com/azure/foundry/agents/
+  - id: azure-ai-search
+    name: Azure AI Search
+    repo: MicrosoftDocs/azure-ai-docs
+    path: articles/search
+    learn_base: https://learn.microsoft.com/azure/search/
+  - id: document-intelligence
+    name: Azure AI Document Intelligence
+    repo: MicrosoftDocs/azure-ai-docs
+    path: articles/ai-services/document-intelligence
+    learn_base: https://learn.microsoft.com/azure/ai-services/document-intelligence/
+  - id: foundry-local
+    name: Foundry Local
+    repo: MicrosoftDocs/azure-ai-docs
+    path: articles/foundry-local
+    learn_base: https://learn.microsoft.com/azure/foundry-local/

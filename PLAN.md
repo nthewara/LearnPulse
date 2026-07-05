@@ -4,9 +4,10 @@ Track Azure feature changes by diffing Microsoft Learn documentation, and presen
 per-service change feed plus a summarized dashboard on a deliberately minimal,
 framework-free website.
 
-**Pilot scope: Azure Kubernetes Service**, whose docs live in the dedicated repo
+**Initial scope:** Azure Kubernetes Service docs in
 [MicrosoftDocs/azure-aks-docs](https://github.com/MicrosoftDocs/azure-aks-docs)
-(see §1.1).
+and selected Azure AI docs in
+[MicrosoftDocs/azure-ai-docs](https://github.com/MicrosoftDocs/azure-ai-docs).
 
 ## 1. Why the docs repo is a good signal
 
@@ -28,11 +29,13 @@ inspecting the repo (July 2026):
   `GET /repos/MicrosoftDocs/azure-docs/commits?path=articles/<service>&since=<ts>`
   returns just that service's commits. We never need to clone the ~27 GB repo.
 
-### 1.1 Not everything lives in azure-docs: the AKS pilot repo
+### 1.1 Not everything lives in azure-docs: dedicated docs repos
 
 Some services have been split out of the monolith into dedicated docs repos. AKS is
 one of them: [MicrosoftDocs/azure-aks-docs](https://github.com/MicrosoftDocs/azure-aks-docs)
-(the public sync of the private `azure-aks-docs-pr` repo). Findings (July 2026):
+(the public sync of the private `azure-aks-docs-pr` repo). Azure AI docs also live
+in [MicrosoftDocs/azure-ai-docs](https://github.com/MicrosoftDocs/azure-ai-docs).
+Findings (July 2026):
 
 - **Small and focused**: ~285 MB (vs ~27 GB for azure-docs), 653 markdown pages —
   shallow-cloneable if we ever want local diffing, though the API remains the default.
@@ -58,10 +61,11 @@ products:
     name: Azure Kubernetes Fleet Manager
     repo: MicrosoftDocs/azure-aks-docs
     path: articles/kubernetes-fleet
-  # later — services still in the monolith repo:
-  # - id: azure-functions
-  #   repo: MicrosoftDocs/azure-docs
-  #   path: articles/azure-functions
+  - id: azure-openai
+    name: Azure OpenAI Service
+    repo: MicrosoftDocs/azure-ai-docs
+    path: articles/foundry/openai
+    learn_base: https://learn.microsoft.com/azure/foundry/openai/
 ```
 
 ### The core challenge: signal vs. noise
@@ -95,7 +99,7 @@ dashboard to GitHub Pages. No servers to operate.
 ### 3.1 Ingestion (no clone required)
 
 - A scheduled GitHub Action (e.g. every 6 hours) walks the **watchlist** in
-  `products.yml` (pilot: the three AKS-repo product areas; expandable later).
+  `products.yml` (AKS and Azure AI product areas; expandable later).
 - For each product: `GET /repos/<repo>/commits?path=<path>&since=<last_run>` to list
   new commits, then `GET /commits/<sha>` for the file-level patch data (filenames,
   status, patch hunks). Rate limits are generous for this volume (5,000 req/h
@@ -229,9 +233,9 @@ SQLite.
 
 ## 6. Open questions
 
-- ~~Which services should the pilot watchlist include?~~ **Decided: AKS first**
-  (plus its sibling areas kubernetes-fleet and application-network, which come free
-  from the same repo).
+- ~~Which services should the initial watchlist include?~~ **Decided: AKS first,
+  then selected Azure AI products** (plus AKS sibling areas kubernetes-fleet and
+  application-network, which come free from the same repo).
 - Should deleted/renamed pages get their own "retired capability" view?
 - Notification channel priority after the dashboard: RSS, email digest, or a
   GitHub Discussion per week?

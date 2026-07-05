@@ -1,10 +1,11 @@
 # LearnPulse architecture
 
 LearnPulse is a repo-hosted data pipeline and static dashboard for tracking
-meaningful Microsoft Learn documentation changes. The current pilot watches AKS
-documentation in `MicrosoftDocs/azure-aks-docs`, classifies noisy editorial churn
-away from product-relevant changes, and publishes a GitHub Pages dashboard from
-committed JSON feeds.
+meaningful Microsoft Learn documentation changes. The current watchlist covers
+AKS documentation in `MicrosoftDocs/azure-aks-docs` and selected Azure AI docs in
+`MicrosoftDocs/azure-ai-docs`, classifies noisy editorial churn away from
+product-relevant changes, and publishes a GitHub Pages dashboard from committed
+JSON feeds.
 
 ## System shape
 
@@ -36,7 +37,7 @@ repository, and GitHub Pages serves the static dashboard from `docs/`.
 
 | Path | Purpose |
 | --- | --- |
-| `products.yml` | Watchlist of `(repo, path, learn_base)` product definitions. |
+| `products.yml` | Watchlist of `(repo, path, learn_base)` product definitions, including AKS and Azure AI products. |
 | `pipeline/` | Python pipeline stages and SQLite helpers. |
 | `data/learnpulse.db` | SQLite system of record committed with cursors, dedupe state, raw commits, triage, and summaries. |
 | `docs/` | GitHub Pages site root: static HTML, CSS, JS, and JSON feeds. |
@@ -123,7 +124,8 @@ are reflected on the live site after Pages rebuilds.
 
 ## Configuration and secrets
 
-- Add or change tracked products in `products.yml`.
+- Add or change tracked products in `products.yml`; entries can point to any
+  Microsoft Learn docs repo/path pair with a matching `learn_base`.
 - `GITHUB_TOKEN` increases API rate limits; it is supplied automatically in
   GitHub Actions.
 - `ANTHROPIC_API_KEY` is optional. If unset or failing, the pipeline falls back to
@@ -139,6 +141,6 @@ node --check docs/app.js
 ```
 
 For live validation after deployment, open
-<https://nthewara.github.io/LearnPulse/> and confirm the dashboard loads, JSON
-feeds return HTTP 200, and the batched change cards render without raw markdown
-tokens.
+<https://nthewara.github.io/LearnPulse/> and confirm the dashboard loads, AKS and
+Azure AI product filters are visible, JSON feeds return HTTP 200, and the batched
+change cards render without raw markdown tokens.

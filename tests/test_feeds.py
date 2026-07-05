@@ -75,6 +75,38 @@ class FeedCategoryTests(unittest.TestCase):
         )
         self.assertTrue(record["batch_key"].startswith("new-page:aks:widget-autoscaling"))
 
+    def test_azure_ai_record_json_keeps_product_and_doc_url(self):
+        row = {
+            "id": "def45678-0",
+            "product": "azure-ai-search",
+            "date": "2026-07-05",
+            "kind": "doc-update",
+            "title": "Update indexing guide",
+            "summary": "Updated indexing guidance.",
+            "reasons_json": json.dumps(["doc-update"]),
+            "files_json": json.dumps(["articles/search/search-how-to-index.md"]),
+            "doc_urls_json": json.dumps(["https://learn.microsoft.com/azure/search/search-how-to-index"]),
+            "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/def45678",
+            "sha": "def456789abc",
+            "raw_patch_summary": json.dumps({
+                "files": [
+                    {
+                        "filename": "articles/search/search-how-to-index.md",
+                        "status": "modified",
+                        "patch": "+Use the latest Azure AI Search indexing options.",
+                    },
+                ],
+            }),
+        }
+
+        record = feeds._record_to_json(row)
+        self.assertEqual(record["product"], "azure-ai-search")
+        self.assertEqual(record["page_change_category"], "existing-page")
+        self.assertEqual(record["doc_urls"], [
+            "https://learn.microsoft.com/azure/search/search-how-to-index",
+        ])
+        self.assertTrue(record["batch_key"].startswith("existing-page:azure-ai-search:"))
+
 
 if __name__ == "__main__":
     unittest.main()

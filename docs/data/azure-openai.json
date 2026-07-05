@@ -1,0 +1,46 @@
+{
+  "product": "azure-openai",
+  "generated_at": "2026-07-05T03:33:30Z",
+  "records": [
+    {
+      "id": "ae69401c-0",
+      "product": "azure-openai",
+      "date": "2026-06-24",
+      "kind": "doc-update",
+      "title": "Fixed commands for disabling/enabling web search",
+      "summary": "az feature unregister --name OpenAI.BlockedTools.websearch --namespace Microsoft.CognitiveServices --subscription. az feature register --name OpenAI.BlockedTools.websearch --namespace Microsoft.CognitiveServices --subscription.",
+      "change_summary": "az feature unregister --name OpenAI.BlockedTools.websearch --namespace Microsoft.CognitiveServices --subscription. az feature register --name OpenAI.BlockedTools.websearch --namespace Microsoft.CognitiveServices --subscription.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:azure-openai:az-feature-unregister-name-openai-blockedtools-websearch-namespace-microsoft-cog",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/foundry/openai/includes/how-to-web-search-content.md"
+      ],
+      "doc_urls": [],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/ae69401cf10351296465db80216fe70c94f4a914",
+      "sha": "ae69401c"
+    },
+    {
+      "id": "3e56216e-0",
+      "product": "azure-openai",
+      "date": "2026-06-11",
+      "kind": "doc-update",
+      "title": "Update image upload guidelines in documentation",
+      "summary": "Update image upload guidelines in documentation.",
+      "change_summary": "Update image upload guidelines in documentation.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:azure-openai:update-image-upload-guidelines-in-documentation",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/foundry/openai/includes/how-to-gpt-with-vision-content.md"
+      ],
+      "doc_urls": [],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/3e56216e8798e3580b17c098fa2752db21f0b041",
+      "sha": "3e56216e"
+    }
+  ]
+}
