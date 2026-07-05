@@ -1,104 +1,142 @@
 {
- "product": "aks",
- "generated_at": "2026-07-05T03:00:00Z",
- "records": [
-  {
-   "id": "817854da-0",
-   "product": "aks",
-   "date": "2026-07-02",
-   "kind": "doc-update",
-   "title": "Add note on Azure Spot node pools for stateful workloads",
-   "summary": "Guidance added clarifying that Azure Spot node pools are not recommended for stateful workloads due to eviction behavior.",
-   "reasons": [
-    "body-change"
-   ],
-   "files": [
-    "articles/aks/spot-node-pools.md"
-   ],
-   "doc_urls": [
-    "https://learn.microsoft.com/azure/aks/spot-node-pools"
-   ],
-   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/817854da",
-   "sha": "817854da"
-  },
-  {
-   "id": "baf56336-0",
-   "product": "aks",
-   "date": "2026-07-02",
-   "kind": "doc-update",
-   "title": "Enhance documentation for AKS private cluster FQDN",
-   "summary": "Expanded explanation of private cluster FQDN resolution options and custom DNS configuration.",
-   "reasons": [
-    "body-change",
-    "table-edit"
-   ],
-   "files": [
-    "articles/aks/private-clusters.md"
-   ],
-   "doc_urls": [
-    "https://learn.microsoft.com/azure/aks/private-clusters"
-   ],
-   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/baf56336",
-   "sha": "baf56336"
-  },
-  {
-   "id": "aa11bb22-0",
-   "product": "aks",
-   "date": "2026-07-01",
-   "kind": "preview",
-   "title": "Node auto-repair notifications (preview)",
-   "summary": "New page documenting preview support for node auto-repair event notifications via Azure Event Grid.",
-   "reasons": [
-    "new-file",
-    "keyword:preview"
-   ],
-   "files": [
-    "articles/aks/node-auto-repair-notifications.md"
-   ],
-   "doc_urls": [
-    "https://learn.microsoft.com/azure/aks/node-auto-repair-notifications"
-   ],
-   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/aa11bb22",
-   "sha": "aa11bb22"
-  },
-  {
-   "id": "cc33dd44-0",
-   "product": "aks",
-   "date": "2026-06-29",
-   "kind": "ga",
-   "title": "AKS Automatic reaches general availability in more regions",
-   "summary": "Region availability table updated marking AKS Automatic as generally available in six additional regions.",
-   "reasons": [
-    "keyword:ga",
-    "table-edit"
-   ],
-   "files": [
-    "articles/aks/intro-aks-automatic.md"
-   ],
-   "doc_urls": [
-    "https://learn.microsoft.com/azure/aks/intro-aks-automatic"
-   ],
-   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/cc33dd44",
-   "sha": "cc33dd44"
-  },
-  {
-   "id": "ee55ff66-0",
-   "product": "aks",
-   "date": "2026-06-27",
-   "kind": "deprecation",
-   "title": "GPU VM size retirement notice for NC-series v2",
-   "summary": "Added retirement notice: NC-series v2 GPU node pools will be unsupported after August 2026; migration guidance linked.",
-   "reasons": [
-    "keyword:retirement"
-   ],
-   "files": [
-    "articles/aks/gpu-cluster.md"
-   ],
-   "doc_urls": [
-    "https://learn.microsoft.com/azure/aks/gpu-cluster"
-   ],
-   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/ee55ff66",
-   "sha": "ee55ff66"
-  }
- ]
+  "product": "aks",
+  "generated_at": "2026-07-05T00:36:46Z",
+  "records": [
+    {
+      "id": "15ab5bf0-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/csi-secrets-store-identity-access.md",
+        "articles/aks/use-oidc-issuer.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access",
+        "https://learn.microsoft.com/azure/aks/use-oidc-issuer"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/15ab5bf0682f4c0157e858c822d04ef95b6802e5",
+      "sha": "15ab5bf0"
+    },
+    {
+      "id": "2417d1ba-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/image-cleaner.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/image-cleaner"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/2417d1bac80699f0b8686b01b671fe5c35e1ea80",
+      "sha": "2417d1ba"
+    },
+    {
+      "id": "18bd6b44-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to:** :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/vertical-pod-autoscaler.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/vertical-pod-autoscaler"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/18bd6b44b610e49772ded64e18a69a3e9daed6a8",
+      "sha": "18bd6b44"
+    },
+    {
+      "id": "36027e17-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Apply suggestions from code review",
+      "summary": "Apply suggestions from code review. Notable addition: \"If you're unfamiliar with VPA, use the following deployment pattern during application development to identify each application's unique resource utilization characteristics, test VPA to verify it's f\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/vertical-pod-autoscaler.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/vertical-pod-autoscaler"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/36027e172ce5aab8ad84b1451e0e1aec8f35fefd",
+      "sha": "36027e17"
+    },
+    {
+      "id": "5130790b-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Merge pull request #3434 from schaffererin/vpa-automatic",
+      "summary": "Merge pull request #3434 from schaffererin/vpa-automatic. Notable addition: \"**Applies to:** :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/vertical-pod-autoscaler.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/vertical-pod-autoscaler"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/5130790b61945ccdf6304faa89e48f0048634514",
+      "sha": "5130790b"
+    },
+    {
+      "id": "9937ffa2-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "doc-update",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"**Applies to**: :heavy_check_mark: AKS Automatic :heavy_check_mark: AKS Standard\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/aks/api-server-vnet-integration.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/api-server-vnet-integration"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/9937ffa2d5d17c7a47c08152c91f754af7fbbc36",
+      "sha": "9937ffa2"
+    },
+    {
+      "id": "a4530a68-0",
+      "product": "aks",
+      "date": "2026-06-30",
+      "kind": "breaking-change",
+      "title": "Adding AKS Automatic",
+      "summary": "Adding AKS Automatic. Notable addition: \"Kubernetes Event-driven Autoscaling (KEDA) is a single-purpose and lightweight component that makes application autoscaling simple. It's a Cloud Native Computing Foundation (CNCF) Graduate project. KE\"",
+      "reasons": [
+        "keyword:preview",
+        "keyword:breaking-change"
+      ],
+      "files": [
+        "articles/aks/keda-about.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/aks/keda-about"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/a4530a68d649571937487760b9846d315839f4aa",
+      "sha": "a4530a68"
+    }
+  ]
 }

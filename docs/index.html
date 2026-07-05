@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="LearnPulse — Azure feature changes, straight from the docs.">
+  <title>LearnPulse</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <h1>LearnPulse</h1>
+      <p class="tagline">Azure feature changes, straight from the docs</p>
+      <p class="header-meta">
+        <span id="generated-at"></span>
+        <a href="https://github.com/nthewara/LearnPulse" rel="noopener">GitHub&nbsp;&#8599;</a>
+      </p>
+    </header>
+
+    <main>
+      <section id="summary" class="summary" hidden aria-label="Last 7 days summary">
+        <div id="stat-tiles" class="tiles"></div>
+        <div id="notable-block" hidden>
+          <h2>Notable this week</h2>
+          <ul id="notable" class="notable"></ul>
+        </div>
+      </section>
+
+      <nav id="filters" class="filters" hidden aria-label="Filters">
+        <div id="product-filters" class="chip-row" role="group" aria-label="Filter by product"></div>
+        <div id="kind-filters" class="chip-row" role="group" aria-label="Filter by kind"></div>
+      </nav>
+
+      <section id="timeline" aria-label="Change timeline">
+        <p id="status" class="status">Loading&hellip;</p>
+        <div id="timeline-list"></div>
+        <button id="show-more" class="show-more" hidden>Show more</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Data from MicrosoftDocs docs repos &middot; Updated every 6 hours &middot; Not affiliated with Microsoft</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

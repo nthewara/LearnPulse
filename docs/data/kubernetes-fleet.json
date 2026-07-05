@@ -1,26 +1,29 @@
 {
- "product": "kubernetes-fleet",
- "generated_at": "2026-07-05T03:00:00Z",
- "records": [
-  {
-   "id": "1a2b3c4d-0",
-   "product": "kubernetes-fleet",
-   "date": "2026-06-30",
-   "kind": "new-feature",
-   "title": "Cluster resource placement supports taint-based eviction",
-   "summary": "New capability page for taint-based eviction policies in Fleet cluster resource placement.",
-   "reasons": [
-    "new-file",
-    "toc-entry-added"
-   ],
-   "files": [
-    "articles/kubernetes-fleet/crp-taint-eviction.md"
-   ],
-   "doc_urls": [
-    "https://learn.microsoft.com/azure/kubernetes-fleet/crp-taint-eviction"
-   ],
-   "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/1a2b3c4d",
-   "sha": "1a2b3c4d"
-  }
- ]
+  "product": "kubernetes-fleet",
+  "generated_at": "2026-07-05T00:36:46Z",
+  "records": [
+    {
+      "id": "55176997-0",
+      "product": "kubernetes-fleet",
+      "date": "2026-06-18",
+      "kind": "doc-update",
+      "title": "Revert memberSelector-based update strategy docs from PR #3036",
+      "summary": "Revert memberSelector-based update strategy docs from PR #3036. Notable addition: \"* **Update Strategy**: describes a reusable update sequence consisting of stages and groups of clusters. A cluster appears in a group in a stage based on the update group it's assigned. For further in\"",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/kubernetes-fleet/concepts-update-orchestration.md",
+        "articles/kubernetes-fleet/faq.md",
+        "articles/kubernetes-fleet/update-create-update-strategy.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/kubernetes-fleet/concepts-update-orchestration",
+        "https://learn.microsoft.com/azure/kubernetes-fleet/faq",
+        "https://learn.microsoft.com/azure/kubernetes-fleet/update-create-update-strategy"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-aks-docs/commit/55176997930dd04e4c9df2a50666526befe7b7cb",
+      "sha": "55176997"
+    }
+  ]
 }
