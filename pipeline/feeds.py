@@ -25,7 +25,53 @@ KIND_WEIGHT = {"breaking-change": 5, "deprecation": 4, "ga": 3,
 TOP_CHANGES_CAP = 8
 
 
+def _markdown_page(filename: str) -> bool:
+    low = (filename or "").lower()
+    return low.endswith(".md") and "/includes/" not in low and "/media/" not in low
+
+
+def page_change_category(files, reasons) -> str:
+    """Return the dashboard category for a record.
+
+    New pages win for mixed commits so a commit that adds a page and edits
+    supporting pages is surfaced with the page launch.
+    """
+    reasons = reasons or []
+    files = files or []
+
+    for f in files:
+        if isinstance(f, dict):
+            if f.get("status") == "added" and _markdown_page(f.get("filename", "")):
+                return "new-page"
+
+    if "new-file" in reasons:
+        for f in files:
+            filename = f.get("filename", "") if isinstance(f, dict) else str(f)
+            if _markdown_page(filename):
+                return "new-page"
+
+    for f in files:
+        if isinstance(f, dict):
+            if f.get("status") in {"modified", "renamed"} and _markdown_page(f.get("filename", "")):
+                return "existing-page"
+        elif _markdown_page(str(f)):
+            return "existing-page"
+
+    return "existing-page"
+
+
+def _raw_patch_files(row) -> list:
+    try:
+        patch_summary = json.loads(row["raw_patch_summary"] or "{}")
+    except (KeyError, TypeError, json.JSONDecodeError):
+        return []
+    return patch_summary.get("files") or []
+
+
 def _record_to_json(row) -> dict:
+    reasons = json.loads(row["reasons_json"] or "[]")
+    files = json.loads(row["files_json"] or "[]")
+    category_files = _raw_patch_files(row) or files
     return {
         "id": row["id"],
         "product": row["product"],
@@ -33,8 +79,9 @@ def _record_to_json(row) -> dict:
         "kind": row["kind"] or "doc-update",
         "title": row["title"] or "",
         "summary": row["summary"] or "",
-        "reasons": json.loads(row["reasons_json"] or "[]"),
-        "files": json.loads(row["files_json"] or "[]"),
+        "page_change_category": page_change_category(category_files, reasons),
+        "reasons": reasons,
+        "files": files,
         "doc_urls": json.loads(row["doc_urls_json"] or "[]"),
         "commit_url": row["commit_url"],
         "sha": (row["sha"] or "")[:8],

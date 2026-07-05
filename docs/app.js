@@ -17,6 +17,10 @@
     "application-network": "App Networking"
   };
   var RENDER_CAP = 100;
+  var PAGE_CATEGORIES = [
+    { id: "existing-page", label: "Changes to existing pages" },
+    { id: "new-page", label: "New pages added" }
+  ];
 
   var state = {
     records: [],            // merged, newest first
@@ -66,6 +70,132 @@
 
   function recordUrl(rec) {
     return (rec.doc_urls && rec.doc_urls[0]) || rec.commit_url || "#";
+  }
+
+  function fileNameOf(file) {
+    if (!file) return "";
+    return typeof file === "string" ? file : (file.filename || "");
+  }
+
+  function statusOf(file) {
+    return file && typeof file === "object" ? file.status : "";
+  }
+
+  function isMarkdownPage(filename) {
+    var low = (filename || "").toLowerCase();
+    return low.slice(-3) === ".md" &&
+      low.indexOf("/includes/") === -1 &&
+      low.indexOf("/media/") === -1;
+  }
+
+  function pageChangeCategory(rec) {
+    if (rec.page_change_category === "new-page" ||
+        rec.page_change_category === "existing-page") {
+      return rec.page_change_category;
+    }
+
+    var files = rec.files || [];
+    var reasons = rec.reasons || [];
+    var hasNewFileReason = reasons.indexOf("new-file") !== -1;
+
+    if (files.some(function (file) {
+      return statusOf(file) === "added" && isMarkdownPage(fileNameOf(file));
+    })) {
+      return "new-page";
+    }
+    if (hasNewFileReason && files.some(function (file) {
+      return isMarkdownPage(fileNameOf(file));
+    })) {
+      return "new-page";
+    }
+    if (files.some(function (file) {
+      var status = statusOf(file);
+      var filename = fileNameOf(file);
+      return isMarkdownPage(filename) &&
+        (!status || status === "modified" || status === "renamed");
+    })) {
+      return "existing-page";
+    }
+    return "existing-page";
+  }
+
+  function prettyFileName(filename) {
+    var name = (filename || "").split("/").pop() || "page";
+    name = name.replace(/\.md$/i, "").replace(/[-_]+/g, " ");
+    return name.replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
+  }
+
+  function pageNames(rec) {
+    var seen = {};
+    return (rec.files || []).map(fileNameOf).filter(isMarkdownPage).map(function (filename) {
+      return prettyFileName(filename);
+    }).filter(function (name) {
+      if (seen[name]) return false;
+      seen[name] = true;
+      return true;
+    });
+  }
+
+  function normalizeText(text) {
+    return (text || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  }
+
+  function cleanSummaryText(text) {
+    text = (text || "").trim();
+    text = text.replace(/^Notable addition:\s*/i, "Added detail: ");
+    if (text && !/[.!?]"?$/.test(text)) text += ".";
+    return text;
+  }
+
+  function stripTitlePrefix(summary, title) {
+    if (!summary || !title) return summary;
+    var lowerSummary = summary.toLowerCase();
+    var lowerTitle = title.toLowerCase();
+    var prefixes = [lowerTitle + ". ", lowerTitle + ": ", lowerTitle + " — ", lowerTitle + " - "];
+    for (var i = 0; i < prefixes.length; i += 1) {
+      if (lowerSummary.indexOf(prefixes[i]) === 0) {
+        return summary.slice(prefixes[i].length).trim();
+      }
+    }
+    return summary;
+  }
+
+  function derivedSummary(rec) {
+    var names = pageNames(rec);
+    var count = names.length;
+    var shown = names.slice(0, 2).join(", ");
+    if (count > 2) shown += " and " + (count - 2) + " more";
+
+    if (pageChangeCategory(rec) === "new-page") {
+      return count
+        ? "Added " + (count === 1 ? "a new page: " : count + " new pages: ") + shown + "."
+        : "Added a new documentation page.";
+    }
+
+    if ((rec.reasons || []).indexOf("retired-page") !== -1) {
+      return count
+        ? "Retired " + (count === 1 ? "page: " : count + " pages: ") + shown + "."
+        : "Retired a documentation page.";
+    }
+
+    return count
+      ? "Updated " + (count === 1 ? "existing page: " : count + " existing pages: ") + shown + "."
+      : "Updated an existing documentation page.";
+  }
+
+  function summaryForRecord(rec) {
+    var summary = (rec.summary || "").trim();
+    var title = (rec.title || "").trim();
+    if (summary) {
+      var stripped = stripTitlePrefix(summary, title);
+      if (stripped && normalizeText(stripped) !== normalizeText(title)) {
+        return cleanSummaryText(stripped);
+      }
+      if (normalizeText(summary) !== normalizeText(title)) {
+        return cleanSummaryText(summary);
+      }
+    }
+    return derivedSummary(rec);
   }
 
   // ---------- rendering ----------
@@ -166,9 +296,7 @@
     head.appendChild(link(recordUrl(rec), rec.title || "(untitled)"));
     card.appendChild(head);
 
-    if (rec.summary && rec.summary !== rec.title) {
-      card.appendChild(el("p", "summary-text", rec.summary));
-    }
+    card.appendChild(el("p", "summary-text", summaryForRecord(rec)));
 
     var meta = el("div", "meta");
     meta.appendChild(el("span", null, state.productNames[rec.product] || rec.product));
@@ -203,14 +331,29 @@
     statusEl.hidden = true;
 
     var shown = records.slice(0, state.limit);
-    var frag = document.createDocumentFragment();
-    var currentDate = null;
+    var grouped = {};
+    PAGE_CATEGORIES.forEach(function (category) {
+      grouped[category.id] = [];
+    });
     shown.forEach(function (rec) {
-      if (rec.date !== currentDate) {
-        currentDate = rec.date;
-        frag.appendChild(el("h3", "date-heading", formatDate(rec.date)));
-      }
-      frag.appendChild(renderRecord(rec));
+      grouped[pageChangeCategory(rec)].push(rec);
+    });
+
+    var frag = document.createDocumentFragment();
+    PAGE_CATEGORIES.forEach(function (category) {
+      var categoryRecords = grouped[category.id];
+      if (!categoryRecords.length) return;
+      var section = el("section", "category-section");
+      section.appendChild(el("h2", "category-heading", category.label));
+      var currentDate = null;
+      categoryRecords.forEach(function (rec) {
+        if (rec.date !== currentDate) {
+          currentDate = rec.date;
+          section.appendChild(el("h3", "date-heading", formatDate(rec.date)));
+        }
+        section.appendChild(renderRecord(rec));
+      });
+      frag.appendChild(section);
     });
     listEl.appendChild(frag);
 
