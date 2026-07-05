@@ -1,0 +1,28 @@
+{
+  "product": "foundry-agents",
+  "generated_at": "2026-07-05T03:33:30Z",
+  "records": [
+    {
+      "id": "66e14b4a-0",
+      "product": "foundry-agents",
+      "date": "2026-06-05",
+      "kind": "doc-update",
+      "title": "Update REST API reference in deployment instructions",
+      "summary": "Use the REST API for direct HTTP-based deployments or custom tooling. The sections below walk through a first deployment in order: set up variables, build a zip, create the agent, poll until active, and invoke it. Update.",
+      "change_summary": "Use the REST API for direct HTTP-based deployments or custom tooling. The sections below walk through a first deployment in order: set up variables, build a zip, create the agent, poll until active, and invoke it. Update.",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:foundry-agents:use-the-rest-api-for-direct-http-based-deployments-or-custom-tooling-the-section",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/foundry/agents/how-to/deploy-hosted-agent-code.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/foundry/agents/how-to/deploy-hosted-agent-code"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/66e14b4a453d706e4ae0507ebf91526cb3e401b2",
+      "sha": "66e14b4a"
+    }
+  ]
+}

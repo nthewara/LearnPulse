@@ -14,7 +14,12 @@
   var SHORT_NAMES = {
     "aks": "Azure Kubernetes Service",
     "kubernetes-fleet": "Fleet Manager",
-    "application-network": "App Networking"
+    "application-network": "App Networking",
+    "azure-openai": "Azure OpenAI",
+    "foundry-agents": "Foundry Agents",
+    "azure-ai-search": "AI Search",
+    "document-intelligence": "Doc Intelligence",
+    "foundry-local": "Foundry Local"
   };
   var RENDER_CAP = 100;
   var PAGE_CATEGORIES = [

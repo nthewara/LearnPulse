@@ -15,6 +15,12 @@ PRODUCT = {
     "learn_base": "https://learn.microsoft.com/azure/aks/",
 }
 
+AZURE_OPENAI_PRODUCT = {
+    "id": "azure-openai",
+    "path": "articles/foundry/openai",
+    "learn_base": "https://learn.microsoft.com/azure/foundry/openai/",
+}
+
 
 def record(message, files):
     return {
@@ -67,6 +73,23 @@ class TriageClassificationTests(unittest.TestCase):
         self.assertEqual(result["kind"], "deprecation")
         self.assertIn("retired-page", result["reasons"])
         self.assertEqual(result["doc_urls"], [])
+
+    def test_azure_ai_repo_path_maps_to_learn_url(self):
+        self.assertEqual(
+            triage.doc_url_for(
+                "articles/foundry/openai/how-to/fine-tuning.md",
+                AZURE_OPENAI_PRODUCT,
+            ),
+            "https://learn.microsoft.com/azure/foundry/openai/how-to/fine-tuning",
+        )
+
+    def test_azure_ai_repo_path_excludes_non_pages(self):
+        self.assertIsNone(
+            triage.doc_url_for(
+                "articles/foundry/openai/includes/quota.md",
+                AZURE_OPENAI_PRODUCT,
+            )
+        )
 
 
 if __name__ == "__main__":

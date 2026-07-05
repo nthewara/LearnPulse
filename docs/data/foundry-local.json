@@ -1,0 +1,28 @@
+{
+  "product": "foundry-local",
+  "generated_at": "2026-07-05T03:33:30Z",
+  "records": [
+    {
+      "id": "3707cad1-0",
+      "product": "foundry-local",
+      "date": "2026-06-25",
+      "kind": "doc-update",
+      "title": "docs: clarify Foundry Local download provider type",
+      "summary": "The provider type. Use the providerType value returned by GET /foundry/list (for example. AzureFoundry\" or \"HuggingFace\").",
+      "change_summary": "The provider type. Use the providerType value returned by GET /foundry/list (for example. AzureFoundry\" or \"HuggingFace\").",
+      "page_change_category": "existing-page",
+      "batch_key": "existing-page:foundry-local:the-provider-type-use-the-providertype-value-returned-by-get-foundry-list-for-ex",
+      "reasons": [
+        "doc-update"
+      ],
+      "files": [
+        "articles/foundry-local/reference/reference-rest.md"
+      ],
+      "doc_urls": [
+        "https://learn.microsoft.com/azure/foundry-local/reference/reference-rest"
+      ],
+      "commit_url": "https://github.com/MicrosoftDocs/azure-ai-docs/commit/3707cad1a53aa3092e1c6ba14bd2eba63fd7dcdb",
+      "sha": "3707cad1"
+    }
+  ]
+}

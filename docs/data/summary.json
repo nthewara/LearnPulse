@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T03:07:06Z",
+  "generated_at": "2026-07-05T03:33:30Z",
   "window_days": 7,
   "counts_by_kind": {
     "new-feature": 0,
@@ -12,7 +12,12 @@
   "counts_by_product": {
     "aks": 7,
     "kubernetes-fleet": 0,
-    "application-network": 0
+    "application-network": 0,
+    "azure-openai": 0,
+    "foundry-agents": 0,
+    "azure-ai-search": 0,
+    "document-intelligence": 0,
+    "foundry-local": 0
   },
   "top_changes": [
     {

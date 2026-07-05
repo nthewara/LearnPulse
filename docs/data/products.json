@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T03:07:06Z",
+  "generated_at": "2026-07-05T03:33:30Z",
   "products": [
     {
       "id": "aks",
@@ -12,6 +12,26 @@
     {
       "id": "application-network",
       "name": "AKS Application Networking"
+    },
+    {
+      "id": "azure-openai",
+      "name": "Azure OpenAI Service"
+    },
+    {
+      "id": "foundry-agents",
+      "name": "Foundry Agent Service"
+    },
+    {
+      "id": "azure-ai-search",
+      "name": "Azure AI Search"
+    },
+    {
+      "id": "document-intelligence",
+      "name": "Azure AI Document Intelligence"
+    },
+    {
+      "id": "foundry-local",
+      "name": "Foundry Local"
     }
   ]
 }

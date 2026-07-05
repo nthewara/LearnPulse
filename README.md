@@ -10,9 +10,9 @@ shipping across Azure — often ahead of blog posts and release notes.
 
 **LearnPulse** turns that firehose of doc commits into:
 
-1. **Per-product change tracking** — currently piloting with Azure Kubernetes
-   Service via [MicrosoftDocs/azure-aks-docs](https://github.com/MicrosoftDocs/azure-aks-docs)
-   (three products: AKS, Kubernetes Fleet Manager, AKS Application Networking)
+1. **Per-product change tracking** — currently watching AKS and selected Azure AI
+   product docs from [MicrosoftDocs/azure-aks-docs](https://github.com/MicrosoftDocs/azure-aks-docs)
+   and [MicrosoftDocs/azure-ai-docs](https://github.com/MicrosoftDocs/azure-ai-docs)
 2. **A summary view** — a minimal website with a weekly summary and a filterable
    change timeline, with noise (typos, link fixes, metadata sweeps) filtered out
 
@@ -66,8 +66,8 @@ python3 -m pip install -r requirements.txt
 # Small, rate-limit-friendly backfill for all configured products
 python3 pipeline/run.py --max-commits 5 --since-days 7
 
-# Or limit to one product id from products.yml
-python3 pipeline/run.py --products aks --max-commits 5 --since-days 7
+# Or limit to product ids from products.yml
+python3 pipeline/run.py --products aks,azure-openai --max-commits 5 --since-days 7
 
 # Preview the dashboard
 python3 -m http.server 8000 -d docs
@@ -80,7 +80,7 @@ Pipeline arguments:
 - `--since-days N`: backfill from the last N days instead of using stored cursors.
 - `--max-commits N`: cap commit-detail fetches per product for local/rate-limited
   runs.
-- `--products aks,kubernetes-fleet`: process only selected product ids.
+- `--products aks,azure-openai`: process only selected product ids.
 
 ## Configuration and environment
 
@@ -106,4 +106,4 @@ Microsoft Learn docs repo works; the next pipeline run picks it up.
 
 ## Status
 
-🟢 Pilot live for AKS. Work is tracked in [Issues](../../issues).
+🟢 Dashboard live for AKS and Azure AI docs. Work is tracked in [Issues](../../issues).
