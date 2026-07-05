@@ -1,4 +1,4 @@
-# mslearndiff — Design & Implementation Plan
+# LearnPulse — Design & Implementation Plan
 
 Track Azure feature changes by diffing Microsoft Learn documentation, and present a
 per-service change feed plus a summarized dashboard.

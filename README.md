@@ -1,4 +1,4 @@
-# mslearndiff
+# LearnPulse
 
 Track Azure feature changes by watching Microsoft Learn documentation.
 
@@ -7,7 +7,7 @@ Microsoft updates its public Learn documentation (sourced from
 service changes. That makes the docs repo a high-signal, machine-readable feed of
 what's actually shipping across Azure — often ahead of blog posts and release notes.
 
-**mslearndiff** turns that firehose of doc commits into:
+**LearnPulse** turns that firehose of doc commits into:
 
 1. **Per-service change tracking** — what changed in Azure Functions, AKS, App Service, … this week
 2. **A summary view** — a digestible dashboard of meaningful changes, with noise (typos, link fixes, formatting) filtered out
